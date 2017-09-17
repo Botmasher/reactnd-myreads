@@ -30,6 +30,10 @@ import '../App.css';
     - control is on the book component
   - beyond mvp
     - add store to handle data
+    - search filters like by author, title
+    - book selection indication / highlighting for selected book
+    - ? store user's notes about the book
+    - 
     - add user to store, ability to log in
     - style and change page look / layout
     - API or scrape to make db 
