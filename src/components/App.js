@@ -4,47 +4,6 @@ import Shelf from './Shelf';
 // import * as BooksAPI from '../utils/BooksAPI';
 import '../App.css';
 
-/*
-  TODO: plans for starters
-  X- use client model as a starter guide for what it could look like
-  X- break out components
-    X- { book, shelf, library/app, search }
-    X- subcomponents: book-shelf-changer < book; book < shelf
-    X- create a ./components folder
-    X- break into separate files
-  - decide what state and passed-in props look like
-    X- include propTypes in components
-    - basic setup/questions about data store
-    - decide how to use state and props
-    - arrange and normalize the static test data
-  - any node components must be --save
-  - declaratively mapping/filtering/reducing over arrays (state)
-  - fetch books from API to replace the static test data
-  - routes
-    - restful perstent routes between search and home screens
-  - wire up search functionality
-    - controlled input component
-    - further split results/bar < search
-    - store data
-    - regex for search -> filtering results
-  - wire ability to change category for book
-    - control is on the book component
-  - beyond mvp
-    - add store to handle data
-    - search filters like by author, title
-    - book selection indication / highlighting for selected book
-    - ? store user's notes about the book
-    - 
-    - add user to store, ability to log in
-    - style and change page look / layout
-    - API or scrape to make db 
-  https://review.udacity.com/#!/rubrics/918/view
-
-  /!\ CAREFUL /!\
-  - if use API, ensure search results match our state in both search and home pages
-
- */
-
 class BooksApp extends React.Component {
   state = {
     /**
