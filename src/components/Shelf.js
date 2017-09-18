@@ -1,21 +1,34 @@
 import React from 'react';
 import Book from './Book';
+import PropTypes from 'prop-types';
 
-function Shelf(props) {
-	return (
-		<div className="bookshelf">
-    	<h2 className="bookshelf-title">{props.title}</h2>
-   		<div className="bookshelf-books">
-    		<ol className="books-grid">
-    		
-    			{props.books.map(book => (
-    				<Book book={book} />
-    			))}
+class Shelf extends React.Component {
+    static propTypes = {
+        id: PropTypes.number,       // index to track this shelf
+        heading: PropTypes.string,  // display heading text for this shelf
+        books: PropTypes.array,     // book data to fill this shelf
+    };
 
-        </ol>
-      </div>
-    </div>
-	);
-}
+    // default values if props not passed in
+    defaultProps = {
+        heading: `My book list #${this.props.id}`
+    }
+
+    // iterate over books and display each book component
+	render() {
+        return (
+            <div className="bookshelf">
+                <h2 className="bookshelf-title">{this.props.heading}</h2>
+                <div className="bookshelf-books">
+                    <ol className="books-grid">
+            			{this.props.books.map((book,i) => (
+                            <li key={i}><Book book={book} /></li>
+                        ))}
+                    </ol>
+                </div>
+            </div>
+    	);
+    }
+};
 
 export default Shelf;

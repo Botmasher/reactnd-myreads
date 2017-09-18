@@ -6,24 +6,25 @@ import '../App.css';
 
 /*
   TODO: plans for starters
-  - use client model as a starter guide for what it could look like
-  - break out components
-    - { book, shelf, library/app, search bar, search results }
-    - ?subcomponents: book-shelf-changer < book; book < shelf; results/bar < search
-    - create a ./components folder
-    - break into separate files
-  - any node components must be --save
+  X- use client model as a starter guide for what it could look like
+  X- break out components
+    X- { book, shelf, library/app, search }
+    X- subcomponents: book-shelf-changer < book; book < shelf
+    X- create a ./components folder
+    X- break into separate files
   - decide what state and passed-in props look like
+    X- include propTypes in components
     - basic setup/questions about data store
-    - include propTypes in each component
     - decide how to use state and props
     - arrange and normalize the static test data
+  - any node components must be --save
   - declaratively mapping/filtering/reducing over arrays (state)
   - fetch books from API to replace the static test data
   - routes
     - restful perstent routes between search and home screens
   - wire up search functionality
     - controlled input component
+    - further split results/bar < search
     - store data
     - regex for search -> filtering results
   - wire ability to change category for book
@@ -142,6 +143,21 @@ class BooksApp extends React.Component {
           height: 192
         }
       }
+    ],
+    // name and display heading for each shelf
+    shelves: [
+      {
+        name: 'present',
+        heading: 'Currently Reading'
+      },
+      {
+        name: 'future',
+        heading: 'Want to Read'
+      },
+      {
+        name: 'past',
+        heading: 'Read'
+      }
     ]
   }
 
@@ -166,18 +182,12 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               { /* div wrapping side-by-side shelf components */}
               <div>
-              
-                <Shelf title={`${'Currently Reading'}`} books={
-                  this.state.bookstore.filter(book => book.shelf==='present')
-                } />
 
-                <Shelf title={`${'Want to Read'}`} books={
-                  this.state.bookstore.filter(book => book.shelf==='future')
-                } />
-
-                <Shelf title={`${'Read'}`} books={
-                  this.state.bookstore.filter(book => book.shelf==='past')
-                } />
+                {this.state.shelves.map((shelf, i) => (
+                  <Shelf heading={shelf.heading} key={i} id={i} books={
+                    this.state.bookstore.filter(book => book.shelf===shelf.name)
+                  } />
+                ))}
 
               {/* end side-by-side div wrapping shelf components */}
               </div>

@@ -1,12 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Book(props) {
-	const {book} = props;
-	return (
-		<li key={book.title}>
+class Book extends React.Component {
+
+	static propTypes = {
+		book: PropTypes.object    // passed-in object for this book
+	};
+
+	render() {
+		const {book} = this.props;
+		return (
     		<div className="book">
-			    <div className="book-top">
-			    	<div className="book-cover"
+				<div className="book-top">
+					<div className="book-cover"
 			    		style={{width: book.img.width,
 			    		height: book.img.height,
 			    		backgroundImage: `url(${book.img.url})`}}>
@@ -24,8 +30,8 @@ function Book(props) {
 				<div className="book-title">{book.title}</div>
 				<div className="book-authors">{book.author}</div>
 			</div>
-    	</li>
-    );
+	    );
+	}
 }
 
 export default Book;
