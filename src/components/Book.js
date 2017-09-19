@@ -7,8 +7,20 @@ class Book extends React.Component {
 		book: PropTypes.object    // passed-in object for this book
 	};
 
+	state = {
+		shelf: ''
+	};
+
+	// handle controlled select component for changing bookshelf
+	handleShelving = (e) => {
+		this.setState({shelf: e.target.value});
+		// set the app state shelf to match local selected shelf
+	};
+
 	render() {
 		const {book} = this.props;
+		// hardcoded test options for building list; match to book data instead
+		const shelfOptions = ['currentlyReading', 'wantToRead', 'read'];
 		return (
     		<div className="book">
 				<div className="book-top">
@@ -21,11 +33,13 @@ class Book extends React.Component {
 			    		backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
 			        </div>
 			        <div className="book-shelf-changer">
-			    		<select>
+			    		<select value={this.state.shelf} onChange={this.handleShelving}>
 			        		<option value="none" disabled>Move to...</option>
-			            	<option value="currentlyReading">Currently Reading</option>
-			            	<option value="wantToRead">Want to Read</option>
-			            	<option value="read">Read</option>
+			        		{shelfOptions.map(option => (
+			        			option===this.state.shelf && (
+			        				<option value={option} key={option}>{`${option.slice()}`}</option>
+			        			)
+			        		))}
 			            	<option value="none">None</option>
 			            </select>
 			        </div>
