@@ -138,6 +138,16 @@ class BooksApp extends React.Component {
     });
   }
 
+  //
+  // - take a single book object and update the array 
+  handleReshelving = (book) => {
+    BooksAPI.update(book, book.shelf);  // update the book through the backend
+    // update book's state in app - /!\ duplicates when click select options menu /!\
+    this.setState(prevState => ({
+      books: [...prevState.books, book]
+    }));
+  }
+
   render() {
     return (
       <div className="app">
@@ -154,9 +164,12 @@ class BooksApp extends React.Component {
               <div>
 
                 {this.state.shelves.map((shelf, i) => (
-                  <Shelf heading={shelf.heading} key={i} id={i} books={
-                    this.state.books.filter(book => book.shelf===shelf.name)
-                  } />
+                  <Shelf heading={shelf.heading}
+                    key={i}
+                    id={i}
+                    books={this.state.books.filter(book => book.shelf===shelf.name)}
+                    handleReshelving={this.handleReshelving}
+                  />
                 ))}
 
               {/* end side-by-side div wrapping shelf components */}

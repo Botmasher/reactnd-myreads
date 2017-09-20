@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 class Book extends React.Component {
 
 	static propTypes = {
-		book: PropTypes.object    // passed-in object for this book
+		book: PropTypes.object,    			// passed-in object for this book
+		handleReshelving: PropTypes.func	// prop threading to update book data
 	};
 
 	state = {
@@ -12,9 +13,10 @@ class Book extends React.Component {
 	};
 
 	// handle controlled select component for changing bookshelf
-	handleShelving = (e) => {
+	changeBookshelf = (e) => {
 		this.setState({shelf: e.target.value});
-		// set the app state shelf to match local selected shelf
+		// pass up to shelf so the shelf to match local selected shelf
+		this.props.handleReshelving({...this.props.book, shelf: e.target.value});
 	};
 
 	render() {
@@ -33,12 +35,10 @@ class Book extends React.Component {
 			    		backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
 			        </div>
 			        <div className="book-shelf-changer">
-			    		<select value={this.state.shelf} onChange={this.handleShelving}>
+			    		<select value={this.state.shelf} onChange={this.changeBookshelf}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{shelfOptions.map(option => (
-			        			option===this.state.shelf && (
-			        				<option value={option} key={option}>{`${option.slice()}`}</option>
-			        			)
+			        			<option value={option} key={option}>{`${option.slice()}`}</option>
 			        		))}
 			            	<option value="none">None</option>
 			            </select>

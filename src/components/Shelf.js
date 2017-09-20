@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 
 class Shelf extends React.Component {
     static propTypes = {
-        id: PropTypes.number,       // index to track this shelf
-        heading: PropTypes.string,  // display heading text for this shelf
-        books: PropTypes.array,     // book data to fill this shelf
+        id: PropTypes.number,               // index to track this shelf
+        heading: PropTypes.string,          // display heading text for this shelf
+        books: PropTypes.array,             // book data to fill this shelf
+        handleReshelving: PropTypes.func    // prop threading to update book data
     };
 
     // default values if props not passed in
     defaultProps = {
         heading: `My book list #${this.props.id}`
-    }
+    };
 
     // iterate over books and display each book component
 	render() {
@@ -22,7 +23,12 @@ class Shelf extends React.Component {
                 <div className="bookshelf-books">
                     <ol className="books-grid">
             			{this.props.books.map((book,i) => (
-                            <li key={i}><Book book={book} /></li>
+                            <li key={i}>
+                                <Book
+                                    book={book}
+                                    handleReshelving={this.props.handleReshelving}
+                                />
+                            </li>
                         ))}
                     </ol>
                 </div>
