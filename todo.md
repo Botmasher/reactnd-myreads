@@ -3,6 +3,10 @@
     - [X] create a ./components folder
 	- [X] break out components into files for App, Shelf, Book, Search
     - [X] subcomponents: book < shelf; shelf < app
+    - [ ] subcomponents?
+    	- [ ] book < search, so queried books have same look and selection
+    	- [ ] search input < search, if need to split out query input
+    	- [ ] search results < search, if need to split results display from input 
 - [ ] decide what state and passed-in props look like
 	- [X] include propTypes in components
 	- [X] basic setup/questions about data store
@@ -21,6 +25,9 @@
 	- [ ] further split results/bar < search
 	- [ ] store data
 	- [ ] regex for search -> filtering results
+	- [ ] book results properly display their shelf state
+	- [ ] book results with undefined images have appropriate placeholder images
+	- [ ] undefined book results or empty results arrays are properly mapped over
 - [ ] replace screen state changing with routing
 	- [ ] restful perstent routes between search and home screens
 - [ ] wire ability to change category for book
@@ -33,10 +40,15 @@
 - declaratively map/filter/reduce over arrays (state)
 
 # Beyond mvp
+- "Above and Beyond" instructor lesson vid suggestions
+	- [ ] CSS styles
+	- [ ] rate books
+	- [ ] bulk move books from one shelf to another
 - [ ] add store for data
+- [ ] brainstorm other ways to use data 
 - [ ] search filters like by author, title
 - [ ] highlighting for selected book
-- [ ] store user's notes about the book
 - [ ] add user to store, ability to log in
+- [ ] keep user notes about the book
 - [ ] style and change page look
 - [ ] API or scrape to make db

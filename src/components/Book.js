@@ -25,21 +25,31 @@ class Book extends React.Component {
 		const shelfOptions = [
 			{name: 'currentlyReading', displayText: 'Currently Reading'},
 			{name: 'wantToRead', displayText: 'Want to Read'},
-			{name: 'read', displayText: 'Read'}
+			{name: 'read', displayText: 'Read'},
+			{name: null, displayText: 'None'}
 		];
+
+		// fallback thumbs for books that have undefined images
+		book.imageLinks===undefined && (
+			book.imageLinks = {
+				thumbnail: 'https://placebear.com/128/180',
+				smallThumbnail: 'https://placebear.com/128/180'
+			}
+		);
+
+		console.log(book.shelf);
+
 		return (
     		<div className="book">
 				<div className="book-top">
 					<div className="book-cover"
 			    		style={{
-			    		//width: book.img.width,
-			    		//height: book.img.height,
 			    		width: 128,
 			    		height: 180,
 			    		backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
 			        </div>
-			        <div className="book-shelf-changer">
-			    		<select defaultValue={book.shelf} onChange={this.changeBookshelf}>
+					<div className="book-shelf-changer">
+			    		<select defaultValue={book.shelf} onChange={e=>this.changeBookshelf(e)}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{shelfOptions.map(option => (
 			        			<option value={option.name} key={option.name}>
