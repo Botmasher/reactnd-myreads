@@ -138,13 +138,18 @@ class BooksApp extends React.Component {
     });
   }
 
-  //
-  // - take a single book object and update the array 
-  handleReshelving = (book) => {
-    BooksAPI.update(book, book.shelf);  // update the book through the backend
-    // update book's state in app - /!\ duplicates when click select options menu /!\
+  // Change the book's backend shelf and update the local shelf state to match
+  // - take a single book object  /!\ currently sending in already-modified book /!\
+  // - run an API update
+  // - update the local array
+  handleReshelving = (updatedBook) => {
+    BooksAPI.update(updatedBook, updatedBook.shelf);  // update the book through the backend
+    // update book's state in app
     this.setState(prevState => ({
-      books: [...prevState.books, book]
+      books: [
+        ...prevState.books.filter(book => book.title!==updatedBook.title),
+        updatedBook
+      ]
     }));
   }
 

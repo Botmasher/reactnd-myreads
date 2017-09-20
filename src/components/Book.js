@@ -22,7 +22,11 @@ class Book extends React.Component {
 	render() {
 		const {book} = this.props;
 		// hardcoded test options for building list; match to book data instead
-		const shelfOptions = ['currentlyReading', 'wantToRead', 'read'];
+		const shelfOptions = [
+			{name: 'currentlyReading', displayText: 'Currently Reading'},
+			{name: 'wantToRead', displayText: 'Want to Read'},
+			{name: 'read', displayText: 'Read'}
+		];
 		return (
     		<div className="book">
 				<div className="book-top">
@@ -35,10 +39,12 @@ class Book extends React.Component {
 			    		backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
 			        </div>
 			        <div className="book-shelf-changer">
-			    		<select value={this.state.shelf} onChange={this.changeBookshelf}>
+			    		<select defaultValue={book.shelf} onChange={this.changeBookshelf}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{shelfOptions.map(option => (
-			        			<option value={option} key={option}>{`${option.slice()}`}</option>
+			        			<option value={option.name} key={option.name}>
+			        				{option.displayText}
+			        			</option>
 			        		))}
 			            	<option value="none">None</option>
 			            </select>
