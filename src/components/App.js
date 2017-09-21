@@ -129,35 +129,38 @@ class BooksApp extends React.Component {
     }));
   }
 
-  // fetch data from Book API once component has rendered
+  // Get API data once component has rendered
   componentDidMount() {
-    // API method returns promise; then chain to get resolved array object
-    BooksAPI.getAll().then((books) => {
-      console.log(books);
-      this.setState({books});
-    });
+    this.fetchShelvedBooks();
+  }
+
+  // Get all user books (that have an assigned shelf)
+  fetchShelvedBooks() {
+    // then-chaining on API promise to get resolved array object
+    BooksAPI.getAll().then(books => (
+      this.setState({books})
+    ));
   }
 
   // Change the book's backend shelf and update the local shelf state to match
   // - take a single book object  /!\ currently sending in already-modified book /!\
   // - run an API update
   // - update the local array
-  handleReshelving = (updatedBook) => {
-    BooksAPI.update(updatedBook, updatedBook.shelf);  // update the book through the backend
+  handleReshelving = (reshelvedBook, shelf) => {
+    // update the book through the backend
+    BooksAPI.update(reshelvedBook, shelf);
     // update book's state in app
-    this.setState(prevState => ({
-      books: [
-        ...prevState.books.filter(book => book.title!==updatedBook.title),
-        updatedBook
-      ]
-    }));
+    this.fetchShelvedBooks();
   }
 
   render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search closeHandler={this.toggleSearchHandler} />
+          <Search
+            closeHandler={this.toggleSearchHandler}
+            handleReshelving={this.handleReshelving}
+          />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
@@ -171,7 +174,6 @@ class BooksApp extends React.Component {
                 {this.state.shelves.map((shelf, i) => (
                   <Shelf heading={shelf.heading}
                     key={i}
-                    id={i}
                     books={this.state.books.filter(book => book.shelf===shelf.name)}
                     handleReshelving={this.handleReshelving}
                   />

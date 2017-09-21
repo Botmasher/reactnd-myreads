@@ -28,6 +28,8 @@
 	- [ ] book results properly display their shelf state
 	- [ ] book results with undefined images have appropriate placeholder images
 	- [ ] undefined book results or empty results arrays are properly mapped over
+	- [ ] ? have component in charge of store (App) do the updates instead of Search
+	- [ ] search results show duplicates of Linux book (duped from first select option code)
 - [ ] replace screen state changing with routing
 	- [ ] restful perstent routes between search and home screens
 - [ ] wire ability to change category for book
@@ -48,6 +50,7 @@
 - [ ] brainstorm other ways to use data 
 - [ ] search filters like by author, title
 - [ ] highlighting for selected book
+	- [ ] same inside of the search results
 - [ ] add user to store, ability to log in
 - [ ] keep user notes about the book
 - [ ] style and change page look

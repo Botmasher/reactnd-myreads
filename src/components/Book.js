@@ -13,14 +13,21 @@ class Book extends React.Component {
 	};
 
 	// handle controlled select component for changing bookshelf
-	changeBookshelf = (e) => {
-		this.setState({shelf: e.target.value});
+	changeBookshelf = event => {
+		this.setState({shelf: `${event.target.value}`});
 		// pass up to shelf so the shelf to match local selected shelf
-		this.props.handleReshelving({...this.props.book, shelf: e.target.value});
+		console.log(this.state.shelf);
+		// component is rerendering and state.shelf is left blank again!!
+		this.props.handleReshelving(this.props.book, event.target.value);
 	};
 
 	render() {
-		const {book} = this.props;
+		
+		// NOTE book objects differ depending on where fetched!
+		// 	- books passed in from BooksAPI .search() query DON'T have .shelf
+		// 	- books passed in from BooksAPI .getAll() fetch DO have .shelf
+		console.log(this.props.book);
+
 		// hardcoded test options for building list; match to book data instead
 		const shelfOptions = [
 			{name: 'currentlyReading', displayText: 'Currently Reading'},
@@ -30,14 +37,12 @@ class Book extends React.Component {
 		];
 
 		// fallback thumbs for books that have undefined images
-		book.imageLinks===undefined && (
-			book.imageLinks = {
+		this.props.book.imageLinks===undefined && (
+			this.props.book.imageLinks = {
 				thumbnail: 'https://placebear.com/128/180',
 				smallThumbnail: 'https://placebear.com/128/180'
 			}
 		);
-
-		console.log(book.shelf);
 
 		return (
     		<div className="book">
@@ -46,22 +51,23 @@ class Book extends React.Component {
 			    		style={{
 			    		width: 128,
 			    		height: 180,
-			    		backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
+			    		backgroundImage: `url(${this.props.book.imageLinks.smallThumbnail})`}}>
 			        </div>
 					<div className="book-shelf-changer">
-			    		<select defaultValue={book.shelf} onChange={e=>this.changeBookshelf(e)}>
+			    		{/* book's options menu to switch shelf */}
+			    		<select defaultValue={this.props.book.shelf} onChange={e=>this.changeBookshelf(e)}>
 			        		<option value="none" disabled>Move to...</option>
+			        		{/* display all possible shelves */}
 			        		{shelfOptions.map(option => (
 			        			<option value={option.name} key={option.name}>
 			        				{option.displayText}
 			        			</option>
 			        		))}
-			            	<option value="none">None</option>
 			            </select>
 			        </div>
 			    </div>
-				<div className="book-title">{book.title}</div>
-				<div className="book-authors">{book.author}</div>
+				<div className="book-title">{this.props.book.title}</div>
+				<div className="book-authors">{this.props.book.author}</div>
 			</div>
 	    );
 	}

@@ -51,9 +51,20 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
+          {/*
+            problems:
+              - results empty: map cannot map over undefined
+                - current workaround: set this.state.results only if API results are >-1
+              - query empty: cannot get API results for undefined (403 error)
+                - current workaround: only run API .search() if query is not empty string
+              - book component shelf: for all books their shelf is undefined
+                - when subcomponents of Search only (not when in Shelf)
+              - book added to shelf: book's handleReshelving is not a function
+                - run in: Books.js input onChange
+                - current workaround: none
+          */}
             {this.state.results.map((book) => (
               <li key={book.id}>
-                {console.log(book.imageLinks)}
                 <Book book={book} handleReshelving={this.props.handleReshelving} />
               </li>
             ))}
