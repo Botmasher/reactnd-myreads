@@ -1,44 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+//import * as BooksAPI from '../utils/BooksAPI';
 
 class Book extends React.Component {
 
 	static propTypes = {
-		book: PropTypes.object,    			// passed-in object for this book
+		data: PropTypes.object,    			// passed-in object for this book
 		handleReshelving: PropTypes.func	// prop threading to update book data
 	};
 
 	state = {
-		shelf: ''
+		shelf: 'none'
 	};
 
 	// handle controlled select component for changing bookshelf
 	changeBookshelf = event => {
 		this.setState({shelf: `${event.target.value}`});
-		// pass up to shelf so the shelf to match local selected shelf
-		console.log(this.state.shelf);
-		// component is rerendering and state.shelf is left blank again!!
-		this.props.handleReshelving(this.props.book, event.target.value);
+		// pass up to parent so that app shelving matches dropdown selected shelf
+		this.props.handleReshelving(this.props.data, event.target.value);
 	};
+
+	// componentDidMount() {
+	// 	// update undefined book shelf from books if it exists
+	// 	if (this.props.book.shelf===undefined) {
+	// 		const assignedShelf = BooksAPI.get(this.props.book.id).then(bookData => bookData);
+	// 		this.setState({shelf: assignedShelf});
+	// 	}
+	// }
 
 	render() {
 		
 		// NOTE book objects differ depending on where fetched!
 		// 	- books passed in from BooksAPI .search() query DON'T have .shelf
 		// 	- books passed in from BooksAPI .getAll() fetch DO have .shelf
-		console.log(this.props.book);
+		// SOLUTION?
+		//  - check with App component if the book is in state
+		// 	- if the book is in state, use that shelf
+		// 	- otherwise, use a default .shelf
+		console.log(this.props.data);
 
 		// hardcoded test options for building list; match to book data instead
 		const shelfOptions = [
 			{name: 'currentlyReading', displayText: 'Currently Reading'},
 			{name: 'wantToRead', displayText: 'Want to Read'},
 			{name: 'read', displayText: 'Read'},
-			{name: null, displayText: 'None'}
+			{name: 'none', displayText: 'None'}
 		];
 
 		// fallback thumbs for books that have undefined images
-		this.props.book.imageLinks===undefined && (
-			this.props.book.imageLinks = {
+		this.props.data.imageLinks===undefined && (
+			this.props.data.imageLinks = {
 				thumbnail: 'https://placebear.com/128/180',
 				smallThumbnail: 'https://placebear.com/128/180'
 			}
@@ -51,11 +62,11 @@ class Book extends React.Component {
 			    		style={{
 			    		width: 128,
 			    		height: 180,
-			    		backgroundImage: `url(${this.props.book.imageLinks.smallThumbnail})`}}>
+			    		backgroundImage: `url(${this.props.data.imageLinks.smallThumbnail})`}}>
 			        </div>
 					<div className="book-shelf-changer">
 			    		{/* book's options menu to switch shelf */}
-			    		<select defaultValue={this.props.book.shelf} onChange={e=>this.changeBookshelf(e)}>
+			    		<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{/* display all possible shelves */}
 			        		{shelfOptions.map(option => (
@@ -66,8 +77,8 @@ class Book extends React.Component {
 			            </select>
 			        </div>
 			    </div>
-				<div className="book-title">{this.props.book.title}</div>
-				<div className="book-authors">{this.props.book.author}</div>
+				<div className="book-title">{this.props.data.title}</div>
+				<div className="book-authors">{this.props.data.author}</div>
 			</div>
 	    );
 	}

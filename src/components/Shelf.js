@@ -19,7 +19,7 @@ class Shelf extends React.Component {
             			{this.props.books.map((book,i) => (
                             <li key={i}>
                                 <Book
-                                    book={book}
+                                    data={book}
                                     handleReshelving={this.props.handleReshelving}
                                 />
                             </li>
