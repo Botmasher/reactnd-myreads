@@ -1,18 +1,12 @@
 import React from 'react'
 import Search from './Search';
 import Shelf from './Shelf';
+import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from '../utils/BooksAPI';
 import '../App.css';
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
     /**
      * TODO:  - Utilize state to fetch books and pass to Shelf components.
      *        - Switch from test data to fetching from BookAPI
@@ -48,13 +42,6 @@ class BooksApp extends React.Component {
         heading: 'Read'
       }
     ]
-  };
-
-  // screen handler passed into search component to simulate routing (return home)
-  toggleSearchHandler = () => {
-    this.setState(prevState => ({
-      showSearchPage: !prevState.showSearchPage
-    }));
   };
 
   // take in a book id and return its current shelf (if any)
@@ -95,18 +82,17 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+        <Route path="/search" render={() => (
           <Search
-            closeHandler={this.toggleSearchHandler}
             handleReshelving={this.handleReshelving}
             checkShelf={this.checkShelf}
           />
-        ) : (
+        )}/>
+        <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-
             <div className="list-books-content">
               { /* div wrapping side-by-side shelf components */}
               <div>
@@ -118,20 +104,15 @@ class BooksApp extends React.Component {
                     handleReshelving={this.handleReshelving}
                   />
                 ))}
-
               {/* end side-by-side div wrapping shelf components */}
               </div>
-
             {/* end div list-books-content */}
             </div>
-
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search">Add a book</Link>
             </div>
-
-          {/* end div list-books */}
           </div>
-        )}
+        )} />
       </div>
     )
   }

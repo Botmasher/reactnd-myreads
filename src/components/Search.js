@@ -1,6 +1,7 @@
 import React from 'react';
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
 class Search extends React.Component {
@@ -12,7 +13,6 @@ class Search extends React.Component {
 
   static propTypes = {
     handleReshelving: PropTypes.func,   // prop threading for App book shelf update
-    closeHandler: PropTypes.func,       // function for returning home (remove with Routes)
     checkShelf: PropTypes.func          // check shelving for a book in the bookstore
   };
 
@@ -24,14 +24,20 @@ class Search extends React.Component {
       BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
         // get book shelf property from parent since query results have no shelf
         const properlyShelvedBooks = [];
-        results.map(unshelvedBook => (
+        !results.error && results.map(unshelvedBook => (
           properlyShelvedBooks.push(
             {...unshelvedBook, shelf: this.props.checkShelf(unshelvedBook)}
           )
         ));
         // update local results to include the shelf property
-        results.length>-1 && this.setState({results: properlyShelvedBooks});
+        this.setState({results: properlyShelvedBooks});
       });
+      // TODO deal with empty results array [] - render out results are 0
+      // TODO display zero results instead of previous results when erase search
+      // TODO update search results when type a single letter
+      // TODO poor results
+        // - "stylistics" query does not match to "Practical Stylistics"
+        // - "ra" query matches to "Robotics"
     }
   };
 
@@ -40,7 +46,7 @@ class Search extends React.Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <a className="close-search" onClick={this.props.closeHandler}>Close</a>
+          <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -72,11 +78,14 @@ class Search extends React.Component {
                 - run in: Books.js input onChange
                 - current workaround: none
           */}
-            {this.state.results.map(book => (
+            {this.state.results.length>0 && this.state.results.map(book => (
               <li key={book.id}>
                 <Book data={book} handleReshelving={this.props.handleReshelving} />
               </li>
             ))}
+            {this.state.results.length<1 && this.state.query!=='' && this.state.query.length>1 && <p>No results match your search.</p>}
+            {this.state.query==='' && <p>Results will display here.</p>}
+            {this.state.query.length===1 && <p>Search query is too short.</p>}
             </ol>
         </div>
       </div>

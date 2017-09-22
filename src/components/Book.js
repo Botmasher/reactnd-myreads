@@ -37,8 +37,7 @@ class Book extends React.Component {
 		//  - check with App component if the book is in state
 		// 	- if the book is in state, use that shelf
 		// 	- otherwise, use a default .shelf
-		console.log(this.props.data);
-
+		
 		// hardcoded test options for building list; match to book data instead
 		const shelfOptions = [
 			{name: 'currentlyReading', displayText: 'Currently Reading'},
