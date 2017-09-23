@@ -5,20 +5,22 @@ import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from '../utils/BooksAPI';
 import '../App.css';
 
+/*
+ * Behavior:
+ *  - App component routes to a list of Shelves or a Search component
+ *  - Shelf component lists its associated Book components.
+ *  - Search component returns query results as Book components.
+ *  - Book component takes in JSON object and uses title, author, thumb, id, shelf.
+ *  - Book component has dropdown that updates its shelf categorization.
+ */
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO:  - Utilize state to fetch books and pass to Shelf components.
-     *        - Switch from test data to fetching from BookAPI
-     *
-     * Structure:
-     * Shelf component should list its associated Book components.
-     * Book component should know its past-pres-fut categorization.
-     * Book component should also have a title, author, imgUrl, imgHeight, imgWidth
+    /*
      * Store structure:
+     * {books, shelves}
+     * Property structure for 'books'
      * [{book_1}, {book_2}, ... {book_n}]
-     * Book structure:
-     * {title, author, status, imgURL, imgHeight, imgWidth}
+     * Property structure for each book of books - directly mirrors from API results
      *
      * Map of relations:
      * - Book has one Shelf

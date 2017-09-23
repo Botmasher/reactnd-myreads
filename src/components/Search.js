@@ -21,6 +21,13 @@ class Search extends React.Component {
     this.setState({query: e.target.value.trim()});
     if (this.state.query!=='') {
       // get query results from the API
+      // CAUTION: book objects differ depending on where fetched!
+      //  - books passed in from BooksAPI .search() query DON'T have .shelf
+      //  - books passed in from BooksAPI .getAll() fetch DO have .shelf
+      // SOLUTION: add .shelf to searched books
+      //  - check with App component if the book is in state
+      //  - if the book is in state, use that shelf
+      //  - otherwise, use a default .shelf
       BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
         // get book shelf property from parent since query results have no shelf
         const properlyShelvedBooks = [];

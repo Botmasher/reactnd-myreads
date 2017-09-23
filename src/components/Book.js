@@ -20,25 +20,9 @@ class Book extends React.Component {
 		this.props.handleReshelving(this.props.data, event.target.value);
 	};
 
-	// componentDidMount() {
-	// 	// update undefined book shelf from books if it exists
-	// 	if (this.props.book.shelf===undefined) {
-	// 		const assignedShelf = BooksAPI.get(this.props.book.id).then(bookData => bookData);
-	// 		this.setState({shelf: assignedShelf});
-	// 	}
-	// }
-
 	render() {
 		
-		// NOTE book objects differ depending on where fetched!
-		// 	- books passed in from BooksAPI .search() query DON'T have .shelf
-		// 	- books passed in from BooksAPI .getAll() fetch DO have .shelf
-		// SOLUTION?
-		//  - check with App component if the book is in state
-		// 	- if the book is in state, use that shelf
-		// 	- otherwise, use a default .shelf
-		
-		// hardcoded test options for building list; match to book data instead
+		// hardcoded options for building dropdown list of shelves
 		const shelfOptions = [
 			{name: 'currentlyReading', displayText: 'Currently Reading'},
 			{name: 'wantToRead', displayText: 'Want to Read'},
