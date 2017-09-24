@@ -3,37 +3,37 @@
     - [X] create a ./components folder
 	- [X] break out components into files for App, Shelf, Book, Search
     - [X] subcomponents: book < shelf; shelf < app
-    - [ ] subcomponents?
-    	- [ ] book < search, so queried books have same look and selection
+    - [ ] subcomponents
+    	- [X] book < search, so queried books have same look and selection
+    	- [ ] book < shelf < list, if need to split up book listing further
     	- [ ] search input < search, if need to split out query input
     	- [ ] search results < search, if need to split results display from input 
-- [ ] decide what state and passed-in props look like
+- [X] decide what state and passed-in props look like
 	- [X] include propTypes in components
 	- [X] basic setup/questions about data store
 	- [X] decide how to use state and props
-	- [ ] arrange and normalize the static test data
+	- [X] organize the static test data (based on API state)
 - [X] fetch books from API to replace the static test data
 	- [X] study and compare logged out fetched objects
 	- [X] chain onto promise results to set App state
 	- [X] store books array in App state to match API state
 	- [X] update past/present/future labels to match API state
 - [ ] format display of book data
-	- [ ] cases with >1 authors
+	- [X] cases with >1 authors
 	- [ ] image width and height
+- [X] wire ability to change category for book
+	- [X] control is on the book component
 - [ ] wire up search functionality
-	- [ ] controlled input component
-	- [ ] further split results/bar < search
-	- [ ] store data
+	- [X] controlled input component
+	- [X] store data
 	- [ ] regex for search -> filtering results
-	- [ ] book results properly display their shelf state
-	- [ ] book results with undefined images have appropriate placeholder images
-	- [ ] undefined book results or empty results arrays are properly mapped over
-	- [ ] ? have component in charge of store (App) do the updates instead of Search
-	- [ ] search results show duplicates of Linux book (duped from first select option code)
-- [ ] replace screen state changing with routing
-	- [ ] restful perstent routes between search and home screens
-- [ ] wire ability to change category for book
-	- [ ] control is on the book component
+	- [X] book results properly display their shelf state
+	- [X] book results with undefined images have placeholder images
+	- [X] undefined book results or empty results arrays are properly mapped over
+	- [X] ? have component in charge of store (App) do the updates instead of Search
+	- [ ] search results do not show duplicates of Linux book (duped from first select option code)
+- [X] replace screen state changing with routing
+	- [X] restful perstent routes between search and home screens
 
 # Attention throughout development
 - keep in step with [Udacity Rubric](https://review.udacity.com/#!/rubrics/918/view)

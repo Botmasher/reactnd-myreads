@@ -38,6 +38,13 @@ class Book extends React.Component {
 			}
 		);
 
+		// format author names for display
+		const authors = (this.props.data.authors && this.props.data.authors.length > 2)
+			? `${this.props.data.authors[0]}, ...`
+			: `${this.props.data.authors.join(' & ')}`;
+
+		console.log (this.props.data);
+
 		return (
     		<div className="book">
 				<div className="book-top">
@@ -48,7 +55,7 @@ class Book extends React.Component {
 			    		backgroundImage: `url(${this.props.data.imageLinks.smallThumbnail})`}}>
 			        </div>
 					<div className="book-shelf-changer">
-			    		{/* book's options menu to switch shelf */}
+			    		{/* popup options menu to switch shelf */}
 			    		<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{/* display all possible shelves */}
@@ -61,7 +68,7 @@ class Book extends React.Component {
 			        </div>
 			    </div>
 				<div className="book-title">{this.props.data.title}</div>
-				<div className="book-authors">{this.props.data.author}</div>
+				<div className="book-authors">{authors}</div>
 			</div>
 	    );
 	}
