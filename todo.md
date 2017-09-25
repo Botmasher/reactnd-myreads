@@ -30,7 +30,7 @@
 	- [X] book results properly display their shelf state
 	- [X] book results with undefined images have placeholder images
 	- [X] undefined book results or empty results arrays are properly mapped over
-	- [ ] books with no .authors data correctly find and display author state
+	- [ ] books with no .authors data correctly find and display author state (but can't get all from App!)
 	- [X] ? have component in charge of store (App) do the updates instead of Search
 	- [ ] search results do not show duplicates of Linux book (duped from first select option code)
 - [X] replace screen state changing with routing
