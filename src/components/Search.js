@@ -13,8 +13,7 @@ class Search extends React.Component {
 
   static propTypes = {
     handleReshelving: PropTypes.func,   // prop threading for App book shelf update
-    checkShelf: PropTypes.func,         // check shelving for a book in the bookstore
-    checkAuthor: PropTypes.func         // check authors for a book in the bookstore
+    checkShelf: PropTypes.func          // check shelving for a book in the bookstore
   };
 
   // controlled component for input search box - called on query input
@@ -37,8 +36,7 @@ class Search extends React.Component {
             // add the parent authors and shelf properties since query results lack them
             {
               ...unshelvedBook,
-              shelf: this.props.checkShelf(unshelvedBook),
-              authors: this.props.checkAuthor(unshelvedBook)
+              shelf: this.props.checkShelf(unshelvedBook)
             }
           )
         ));

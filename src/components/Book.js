@@ -10,7 +10,8 @@ class Book extends React.Component {
 	};
 
 	state = {
-		shelf: 'none'
+		shelf: 'none',
+		maxTitleLength: 50
 	};
 
 	// handle controlled select component for changing bookshelf
@@ -19,6 +20,17 @@ class Book extends React.Component {
 		// pass up to parent so that app shelving matches dropdown selected shelf
 		this.props.handleReshelving(this.props.data, event.target.value);
 	};
+
+	// Cut down excess text at a letter or number
+		// e.g. long book titles
+	truncateTextAtAlphanum(txt, cutIndex) {
+		// check if truncated text ends in letter or numeral
+		if (/[^a-zA-Z0-9]/.test(txt[cutIndex]) || cutIndex===0) {
+			return `${txt.slice(0, cutIndex)}...`;
+		}
+		// cut the text one character sooner
+		return this.truncateTextAtAlphanum(txt, cutIndex-1);
+	}
 
 	render() {
 		
@@ -39,11 +51,16 @@ class Book extends React.Component {
 		);
 
 		// format author names for display
-		const authors = (this.props.data.authors && this.props.data.authors.length > 2)
-			? `${this.props.data.authors[0]}, ...`
-			: `${this.props.data.authors.join(' & ')}`;
+		const authors = this.props.data.authors
+			? this.props.data.authors.length < 3
+				? `${this.props.data.authors.join(' & ')}`
+				: `${this.props.data.authors.join(', ')}`
+			: ``;
 
-		console.log (this.props.data);
+		// format book title for display
+		const title = this.props.data.title.length >= this.state.maxTitleLength
+			? this.truncateTextAtAlphanum(this.props.data.title, this.state.maxTitleLength)
+			: this.props.data.title;
 
 		return (
     		<div className="book">
@@ -67,7 +84,7 @@ class Book extends React.Component {
 			            </select>
 			        </div>
 			    </div>
-				<div className="book-title">{this.props.data.title}</div>
+				<div className="book-title">{title}</div>
 				<div className="book-authors">{authors}</div>
 			</div>
 	    );

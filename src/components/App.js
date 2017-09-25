@@ -54,18 +54,10 @@ class BooksApp extends React.Component {
     return shelvedBooks.length > 0 ? shelvedBooks[0].shelf : 'none';
   }
 
-  // take in a book id and return its authors
-  // - added to handle API query results, which return objects with no authors property
-  // - only called within Search component to display query results
-  checkAuthor = (book) => {
-    const authoredBooks = this.state.books.filter(b => b.id===book.id);
-    return authoredBooks[0] === undefined ? [''] : authoredBooks[0].authors;
-  }
-
   // Change the book's backend shelf and update the local shelf state to match
-  // - take a single book object  /!\ currently sending in already-modified book /!\
+  // - take a single book object and the new shelf
   // - run an API update
-  // - update the local array
+  // - update the local books array
   handleReshelving = (reshelvedBook, shelf) => {
     // update the book through the backend
     BooksAPI.update(reshelvedBook, shelf)
@@ -96,7 +88,6 @@ class BooksApp extends React.Component {
           <Search
             handleReshelving={this.handleReshelving}
             checkShelf={this.checkShelf}
-            checkAuthor={this.checkAuthor}
           />
         )}/>
         <Route exact path="/" render={() => (
