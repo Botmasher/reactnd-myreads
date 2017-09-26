@@ -3,11 +3,9 @@
     - [X] create a ./components folder
 	- [X] break out components into files for App, Shelf, Book, Search
     - [X] subcomponents: book < shelf; shelf < app
-    - [ ] subcomponents
+    - [X] subsubcomponents
     	- [X] book < search, so queried books have same look and selection
-    	- [ ] book < shelf < list, if need to split up book listing further
-    	- [ ] search input < search, if need to split out query input
-    	- [ ] search results < search, if need to split results display from input 
+    	- [X] book < shelf < list, if need to split up book listing further
 - [X] decide what state and passed-in props look like
 	- [X] include propTypes in components
 	- [X] basic setup/questions about data store
@@ -18,21 +16,20 @@
 	- [X] chain onto promise results to set App state
 	- [X] store books array in App state to match API state
 	- [X] update past/present/future labels to match API state
-- [ ] format display of book data
+- [X] format display of book data
 	- [X] cases with >1 authors
-	- [ ] image width and height
+	- [X] very long titles
+	- [X] image width and height
 - [X] wire ability to change category for book
 	- [X] control is on the book component
-- [ ] wire up search functionality
+- [X] wire up search functionality
 	- [X] controlled input component
 	- [X] store data
-	- [ ] regex for search -> filtering results
+	- [X] capture last value properly and handle empty query
 	- [X] book results properly display their shelf state
 	- [X] book results with undefined images have placeholder images
 	- [X] undefined book results or empty results arrays are properly mapped over
-	- [ ] books with no .authors data correctly find and display author state (but can't get all from App!)
 	- [X] ? have component in charge of store (App) do the updates instead of Search
-	- [ ] search results do not show duplicates of Linux book (duped from first select option code)
 - [X] replace screen state changing with routing
 	- [X] restful perstent routes between search and home screens
 
@@ -44,7 +41,7 @@
 
 # Beyond mvp
 - "Above and Beyond" instructor lesson vid suggestions
-	- [ ] CSS styles
+	- [ ] CSS styles *
 	- [ ] rate books
 	- [ ] bulk move books from one shelf to another
 - [ ] add store for data
@@ -52,7 +49,11 @@
 - [ ] search filters like by author, title
 - [ ] highlighting for selected book
 	- [ ] same inside of the search results
-- [ ] add user to store, ability to log in
-- [ ] keep user notes about the book
-- [ ] style and change page look
-- [ ] API or scrape to make db
+- [ ] add user to store, ability to log in *
+- [ ] keep user notes about the book *
+- [ ] Refactor need to hard code shelves (e.g. if API changes book.shelf property) *
+	- [ ] Book component
+	- [ ] App component
+- [ ] an add button for shelves that allows quick adding of books from search results to chosen shelf *
+	- [ ] plus/minus buttons to add/remove
+- [ ] API or scrape to make db *

@@ -5,6 +5,8 @@ This is a bookshelf app to help readers organize their favorite tomes, built as 
 ## Installation
 Once the project folder is downloaded, forked or cloned, the app can be run locally from within the project folder with the command **npm start**.
 
+TODO: Needs to mention **npm install** and requirements (node, npm)
+
 ## Why MyReads?
 
 Readers like to keep track of and discuss their past, present and future reads. They're also familiar with the visuals of organizing books on shelves and browsing through them. This app is a place to search for, shelf and look through through books you want to read, are reading and have already read.
@@ -97,6 +99,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+If you'd like to add a feature or fix a bug in this application, please fork the repository and make a pull request with your updated code.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -18,39 +18,43 @@ class Search extends React.Component {
 
   // controlled component for input search box - called on query input
   handleInputField = (e) => {
-    this.setState({query: e.target.value.trim()});
-    if (this.state.query!=='') {
-      // get query results from the API
-      // CAUTION: book objects differ depending on where fetched!
-      //  - books passed in from BooksAPI .search() query DON'T have .shelf
-      //  - books passed in from BooksAPI .getAll() fetch DO have .shelf
-      // SOLUTION: add .shelf to searched books
-      //  - check with App component if the book is in state
-      //  - if the book is in state, use that shelf
-      //  - otherwise, use a default .shelf
-      BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
-        // get properties from parent since query results are missing certain properties
-        const properlyShelvedBooks = [];
-        !results.error && results.map(unshelvedBook => (
-          properlyShelvedBooks.push(
-            // add the parent authors and shelf properties since query results lack them
-            {
-              ...unshelvedBook,
-              shelf: this.props.checkShelf(unshelvedBook)
-            }
-          )
-        ));
+    this.setState({query: e.target.value}, () => {
+      if (this.state.query!=='') {
+        // get query results from the API
+        // CAUTION: book objects differ depending on where fetched!
+        //  - books passed in from BooksAPI .search() query DON'T have .shelf
+        //  - books passed in from BooksAPI .getAll() fetch DO have .shelf
+        // SOLUTION: add .shelf to searched books
+        //  - check with App component if the book is in state
+        //  - if the book is in state, use that shelf
+        //  - otherwise, use a default .shelf
 
-        // update local results to include the shelf property
-        this.setState({results: properlyShelvedBooks});
-      });
-      // TODO deal with empty results array [] - render out results are 0
-      // TODO display zero results instead of previous results when erase search
-      // TODO update search results when type a single letter
-      // TODO poor results
-        // - "stylistics" query does not match to "Practical Stylistics"
-        // - "ra" query matches to "Robotics"
-    }
+        BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
+          // get properties from parent since query results are missing certain properties
+          const properlyShelvedBooks = [];
+          !results.error && results.map(unshelvedBook => (
+            properlyShelvedBooks.push(
+              // add the parent authors and shelf properties since query results lack them
+              {
+                ...unshelvedBook,
+                shelf: this.props.checkShelf(unshelvedBook)
+              }
+            )
+          ));
+
+          // update local results to include the shelf property
+          this.setState({results: properlyShelvedBooks});
+        });
+        // TODO deal with empty results array [] - render out results are 0
+        // TODO display zero results instead of previous results when erase search
+        // TODO update search results when type a single letter
+        // TODO poor results
+          // - "stylistics" query does not match to "Practical Stylistics"
+          // - "ra" query matches to "Robotics"
+      } else {
+        this.setState({results: []});
+      }
+    });
   };
 
   render() {
@@ -97,7 +101,6 @@ class Search extends React.Component {
             ))}
             {this.state.results.length<1 && this.state.query!=='' && this.state.query.length>1 && <p>No results match your search.</p>}
             {this.state.query==='' && <p>Results will display here.</p>}
-            {this.state.query.length===1 && <p>Search query is too short.</p>}
             </ol>
         </div>
       </div>
