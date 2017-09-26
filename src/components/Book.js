@@ -6,11 +6,12 @@ class Book extends React.Component {
 
 	static propTypes = {
 		data: PropTypes.object,    			// passed-in object for this book
-		handleReshelving: PropTypes.func	// prop threading to update book data
+		handleReshelving: PropTypes.func,	// prop threading to update book data
+		shelves: PropTypes.array	 		// prop threading to display dropdown shelves menu
 	};
 
 	state = {
-		shelf: 'none',
+		shelf: 'none', 						// 
 		maxTitleLength: 50
 	};
 
@@ -33,15 +34,6 @@ class Book extends React.Component {
 	}
 
 	render() {
-		
-		// hardcoded options for building dropdown list of shelves
-		const shelfOptions = [
-			{name: 'currentlyReading', displayText: 'Currently Reading'},
-			{name: 'wantToRead', displayText: 'Want to Read'},
-			{name: 'read', displayText: 'Read'},
-			{name: 'none', displayText: 'None'}
-		];
-
 		// fallback thumbs for books that have undefined images
 		this.props.data.imageLinks===undefined && (
 			this.props.data.imageLinks = {
@@ -76,9 +68,9 @@ class Book extends React.Component {
 			    		<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
 			        		<option value="none" disabled>Move to...</option>
 			        		{/* display all possible shelves */}
-			        		{shelfOptions.map(option => (
-			        			<option value={option.name} key={option.name}>
-			        				{option.displayText}
+			        		{this.props.shelves.map(shelf => (
+			        			<option value={shelf.name} key={shelf.name}>
+			        				{shelf.heading}
 			        			</option>
 			        		))}
 			            </select>

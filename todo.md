@@ -51,9 +51,9 @@
 	- [ ] same inside of the search results
 - [ ] add user to store, ability to log in *
 - [ ] keep user notes about the book *
-- [ ] Refactor need to hard code shelves (e.g. if API changes book.shelf property) *
-	- [ ] Book component
-	- [ ] App component
+- [X] Refactor need to hard code shelves (e.g. if API changes book.shelf property) *
+	- [X] Book component
+	- [X] App component
 - [ ] an add button for shelves that allows quick adding of books from search results to chosen shelf *
 	- [ ] plus/minus buttons to add/remove
 - [ ] API or scrape to make db *

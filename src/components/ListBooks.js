@@ -14,11 +14,14 @@ function ListBooks(props) {
         <div>
 
           {props.shelves.map((shelf, i) => (
-            <Shelf heading={shelf.heading}
-              key={i}
-              books={props.books.filter(book => book.shelf===shelf.name)}
-              handleReshelving={props.handleReshelving}
-            />
+            shelf.name!=='none' && (
+              <Shelf heading={shelf.heading}
+                key={i}
+                shelves={props.shelves}
+                books={props.books.filter(book => book.shelf===shelf.name)}
+                handleReshelving={props.handleReshelving}
+              />
+            )
           ))}
         {/* end side-by-side div wrapping shelf components */}
         </div>
@@ -34,7 +37,7 @@ function ListBooks(props) {
 ListBooks.propTypes = {
   handleReshelving: PropTypes.func,   // prop threading for App to change a book's shelf
   books: PropTypes.array,             // list of all books to display in shelves
-  shelves: PropTypes.array            // list of names and titles for each shelf
+  shelves: PropTypes.array            // prop threading list of all shelves
 };
 
 export default ListBooks;

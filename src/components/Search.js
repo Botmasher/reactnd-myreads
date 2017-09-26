@@ -13,7 +13,8 @@ class Search extends React.Component {
 
   static propTypes = {
     handleReshelving: PropTypes.func,   // prop threading for App book shelf update
-    checkShelf: PropTypes.func          // check shelving for a book in the bookstore
+    checkShelf: PropTypes.func,         // check shelving for a book in the bookstore
+    shelves: PropTypes.array            // prop threading for all shelves
   };
 
   // controlled component for input search box - called on query input
@@ -96,7 +97,11 @@ class Search extends React.Component {
           */}
             {this.state.results.length>0 && this.state.results.map(book => (
               <li key={book.id}>
-                <Book data={book} handleReshelving={this.props.handleReshelving} />
+                <Book
+                  data={book}
+                  handleReshelving={this.props.handleReshelving}
+                  shelves={this.props.shelves}
+                />
               </li>
             ))}
             {this.state.results.length<1 && this.state.query!=='' && this.state.query.length>1 && <p>No results match your search.</p>}
