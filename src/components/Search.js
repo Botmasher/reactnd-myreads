@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 
 class Search extends React.Component {
   state = {
-    query: '',          // empty query string to fill from controlled component
-    maxResults: 20,     // results count limit to pass into API .search()
-    results: []         // store results data returned from API .search()
+    query: '',        // empty query string to fill from controlled component
+    maxResults: 20,   // results count limit to pass into API .search()
+    results: []       // store results data returned from API .search()
   };
 
   static propTypes = {
@@ -16,6 +16,15 @@ class Search extends React.Component {
     checkShelf: PropTypes.func,         // check shelving for a book in the bookstore
     shelves: PropTypes.array            // prop threading for all shelves
   };
+
+  // Update shelf in search results and pass shelf up to App for proper reshelving
+  updateResultShelf = (book, shelf) => {
+    this.setState((prevState) => {
+      const results=prevState.results.map(result => result.id===book.id ? {...book, shelf} : result);
+      return {results};
+    });
+    this.props.handleReshelving(book, shelf);
+  }
 
   // controlled component for input search box - called on query input
   handleInputField = (e) => {
@@ -99,7 +108,7 @@ class Search extends React.Component {
               <li key={book.id}>
                 <Book
                   data={book}
-                  handleReshelving={this.props.handleReshelving}
+                  handleReshelving={this.updateResultShelf}
                   shelves={this.props.shelves}
                 />
               </li>

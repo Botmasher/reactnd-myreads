@@ -5,19 +5,17 @@ import PropTypes from 'prop-types';
 class Book extends React.Component {
 
 	static propTypes = {
-		data: PropTypes.object,    			// passed-in object for this book
+		data: PropTypes.object,    			// seed data for this book
 		handleReshelving: PropTypes.func,	// prop threading to update book data
-		shelves: PropTypes.array	 		// prop threading to display dropdown shelves menu
+		shelves: PropTypes.array,	 		// prop threading to display dropdown shelves menu
 	};
 
 	state = {
-		shelf: 'none', 						// 
-		maxTitleLength: 50
+		maxTitleLength: 50	 				// character limit before displaying truncated title
 	};
 
 	// handle controlled select component for changing bookshelf
 	changeBookshelf = event => {
-		this.setState({shelf: `${event.target.value}`});
 		// pass up to parent so that app shelving matches dropdown selected shelf
 		this.props.handleReshelving(this.props.data, event.target.value);
 	};
@@ -57,12 +55,10 @@ class Book extends React.Component {
 		return (
     		<div className="book">
 				<div className="book-top">
-					<div className="book-cover"
-			    		style={{
-			    		width: 128,
-			    		height: 180,
-			    		backgroundImage: `url(${this.props.data.imageLinks.smallThumbnail})`}}>
-			        </div>
+					<div
+						className={`book-cover ${this.props.data.shelf!=='none' ? " book-cover-highlight" : ""}`}
+						style={{ backgroundImage: `url(${this.props.data.imageLinks.smallThumbnail})`}}
+					></div>
 					<div className="book-shelf-changer">
 			    		{/* popup options menu to switch shelf */}
 			    		<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
@@ -76,6 +72,7 @@ class Book extends React.Component {
 			            </select>
 			        </div>
 			    </div>
+				{/* Display formatted title and author */}
 				<div className="book-title">{title}</div>
 				<div className="book-authors">{authors}</div>
 			</div>

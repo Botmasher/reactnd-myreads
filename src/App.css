@@ -10,12 +10,18 @@ body, .app {
 
 /* main page */
 
-.list-books-title {
+.app-title {
+  display: block;
   padding: 10px 0;
   background: #2e7c31;
   text-align: center;
 }
-.list-books-title h1 {
+
+.app-title a, a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+.app-title h1 {
   font-weight: 400;
   margin: 0;
   color: white;
@@ -65,7 +71,6 @@ body, .app {
 /* search page */
 
 .search-books-bar {
-  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
@@ -122,6 +127,15 @@ body, .app {
 .book {
   width: 140px;
 }
+@media screen and (max-width: 500px) {
+  .book {
+    width: 85px;
+  }
+}
+.book-cover-highlight {
+  border: 4px solid #ccffcc;
+}
+
 .book-title,
 .book-authors {
   font-size: 0.8em;
@@ -139,6 +153,11 @@ body, .app {
   display: flex;
   align-items: flex-end;
 }
+@media screen and (max-width: 500px) {
+  .book-top {
+    height: 100px;
+  }
+}
 
 .book-shelf-changer {
   position: absolute;
@@ -154,6 +173,13 @@ body, .app {
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+@media screen and (max-width: 500px) {
+  .book-shelf-changer {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 .book-shelf-changer select {
   width: 100%;
   height: 100%;
@@ -164,9 +190,19 @@ body, .app {
 /* book cover */
 
 .book-cover {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0, 0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
+  background-size: 100% 100%;
+  width: 128px;
+  height: 180px;
 }
+@media screen and (max-width: 500px) {
+  .book-cover {
+    width: 79px;
+    height: 110px;
+  }
+}
+
 .book-cover-title {
   padding: 20px 10px 0;
   text-align: center;

@@ -1,7 +1,7 @@
 import React from 'react'
 import Search from './Search';
 import ListBooks from './ListBooks';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import * as BooksAPI from '../utils/BooksAPI';
 import '../App.css';
 
@@ -33,7 +33,7 @@ class App extends React.Component {
   };
 
   // words to uncaps in pretty display titles
-  uncapsWordsSet = new Set(['of', 'at', 'to', 'in', 'on', 'among', 'around', 'from', 'a', 'an', 'the']);
+  uncapsWordsSet = new Set(['of', 'at', 'to', 'for', 'in', 'on', 'off', 'among', 'around', 'about', 'under', 'above', 'across', 'by', 'until', 'beside', 'before', 'after', 'towards', 'before', 'over', 'through', 'onto', 'into', 'from', 'and', 'or', 'but', 'a', 'an', 'the']);
 
   // Take in a book id and return its current shelf (if any)
   // - added to handle API query results, which return objects with no shelf property
@@ -102,9 +102,15 @@ class App extends React.Component {
   }
 
   render() {
-    // route to Search or List component
     return (
       <div className="app">
+        
+        {/* App title and header */}
+        <Link className="app-title" to="/">
+          <h1>MyReads</h1>
+        </Link>
+
+        {/* route to Search or List component */}
         <Route path="/search" render={() => (
           <Search
             handleReshelving={this.handleReshelving}
@@ -119,6 +125,7 @@ class App extends React.Component {
             shelves={this.state.shelves}
           />
         )} />
+
       </div>
     )
   }
