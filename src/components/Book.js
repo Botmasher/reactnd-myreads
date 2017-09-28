@@ -60,17 +60,17 @@ class Book extends React.Component {
 						style={{ backgroundImage: `url(${this.props.data.imageLinks.smallThumbnail})`}}
 					></div>
 					<div className="book-shelf-changer">
-			    		{/* popup options menu to switch shelf */}
-			    		<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
-			        		<option value="none" disabled>Move to...</option>
-			        		{/* display all possible shelves */}
-			        		{this.props.shelves.map(shelf => (
-			        			<option value={shelf.name} key={shelf.name}>
-			        				{shelf.heading}
-			        			</option>
-			        		))}
-			            </select>
-			        </div>
+						{/* popup options menu to switch shelf */}
+						<select defaultValue={this.props.data.shelf} onChange={e=>this.changeBookshelf(e)}>
+							<option value="none" disabled>Move to...</option>
+							{/* display all possible shelves */}
+							{this.props.shelves.map(shelf => (
+								<option value={shelf.name} key={shelf.name}>
+									{shelf.heading}
+								</option>
+							))}
+						</select>
+					</div>
 			    </div>
 				{/* Display formatted title and author */}
 				<div className="book-title">{title}</div>

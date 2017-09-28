@@ -8,24 +8,40 @@ body, .app {
   background: white;
 }
 
+/* custom properties */
+
+:root {
+  --heading-align: center;
+  --heading-align-mobile: left;
+  --color-bland: #fff;
+  --color-theme: #2e7c31;
+  --color-accent: #2e7d32;
+}
+
 /* main page */
 
 .app-title {
   display: block;
   padding: 10px 0;
-  background: #2e7c31;
-  text-align: center;
+  background: var(--color-theme);
+  text-align: var(--heading-align);
 }
-
 .app-title a, a:link, a:visited, a:hover, a:active {
   text-decoration: none;
 }
-
 .app-title h1 {
+  font-size: 40px;
   font-weight: 400;
   margin: 0;
-  color: white;
+  color: var(--color-bland);
 }
+@media (max-width: 600px) {
+  .app-title h1 {
+    font-size: 35px;
+    text-align: var(--heading-align-mobile);
+    margin-left: 20px;
+  }
+} 
 
 .list-books-content {
   padding: 0 0 80px;
@@ -34,8 +50,11 @@ body, .app {
 
 .bookshelf {
   padding: 0 10px 20px;
+  transition: background-color 1s ease;
 }
-
+.bookshelf:hover {
+  background-color: #efe;
+}
 @media (min-width: 600px) {
   .bookshelf {
     padding: 0 20px 40px;
@@ -44,28 +63,48 @@ body, .app {
 
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
+  text-align: var(--heading-align);
 }
+@media screen and (max-width: 600px) {
+  .bookshelf-title {
+    text-align: var(--heading-align-mobile);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
 .bookshelf-books {
-  text-align: center;
+  text-align: var(--heading-align);
 }
 
 .open-search {
   position: fixed;
-  right: 25px;
-  bottom: 25px;
+  right: 20px;
+  top: 10px;
 }
 .open-search a {
   display: block;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2e7d32;
+  background: var(--color-accent);
   background-image: url('./icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
+}
+@media screen and (max-width: 600px) {
+  .open-search {
+    right: 18px;
+    top: 15px;
+  }
+  .open-search a {
+    width: 40px;
+    height: 40px;
+    display: block;
+  }
 }
 
 /* search page */
@@ -96,7 +135,7 @@ body, .app {
   left: 15px;
   width: 50px;
   height: 53px;
-  background: white;
+  background: var(--color-bland);
   background-image: url('./icons/arrow-back.svg');
   background-position: center;
   background-repeat: no-repeat;
@@ -116,20 +155,25 @@ body, .app {
   margin: 0;
 
   display: flex;
-  justify-content: center;
+  justify-content: var(--heading-align);
   flex-wrap: wrap;
 }
 .books-grid li {
   padding: 10px 15px;
   text-align: left;
 }
+@media screen and (max-width: 600px) {
+  .books-grid {
+    justify-content: var(--heading-align-mobile);
+  }
+}
 
 .book {
   width: 140px;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .book {
-    width: 85px;
+    width: 94px;
   }
 }
 .book-cover-highlight {
@@ -146,6 +190,15 @@ body, .app {
 .book-authors {
   color: #999;
 }
+@media screen and (max-width: 600px) {
+  .book-authors {
+    display: none;
+  }
+  .book-title {
+    text-align: center;
+    font-size: 0.7em;
+  }
+}
 
 .book-top {
   position: relative;
@@ -153,9 +206,9 @@ body, .app {
   display: flex;
   align-items: flex-end;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .book-top {
-    height: 100px;
+    height: 130px;
   }
 }
 
@@ -172,11 +225,17 @@ body, .app {
   background-position: center;
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all .2s ease-in-out;
 }
-@media screen and (max-width: 500px) {
+.book-shelf-changer:hover {
+  transform: scale(1.2);
+}
+@media screen and (max-width: 600px) {
   .book-shelf-changer {
-    width: 20px;
-    height: 20px;
+    right: -10px;
+    bottom: -4px;
+    width: 45px;
+    height: 45px;
   }
 }
 
@@ -195,11 +254,16 @@ body, .app {
   background-size: 100% 100%;
   width: 128px;
   height: 180px;
+  transition: all .4s ease-in-out;
 }
-@media screen and (max-width: 500px) {
+.book-cover:hover {
+  transform: scale(1.04);
+}
+@media screen and (max-width: 600px) {
   .book-cover {
-    width: 79px;
-    height: 110px;
+    margin-left: 6px;
+    width: 92px;
+    height: 129px;
   }
 }
 
