@@ -5,12 +5,12 @@ This is a quick guide for users who would like to contribute to MyReads. Please 
 ## Submitting a Pull Request
 
 Before you submit a request, please follow this checklist:
- [ ] Update or remove any added install or build dependencies for the project. "Working locally" does not mean "working"!
- [ ] Leave a clear, readable commit history that follows the [Udacity Git Commit Message Style Guide](https://udacity.github.io/git-styleguide/).
- [ ] Update the README.md with any important info that follows from or motivated your changes.
- [ ] Update the TODO.md to reflect your tasks and wishlist, though exercise caution if you remove existing list items.
- [ ] Add your contribution to the CONTRIBUTING.md **Contribution History** below.
- [ ] Submit your Pull Request to the project owner.
+[ ] Update or remove any added install or build dependencies for the project. "Working locally" does not mean "working"!
+[ ] Leave a clear, readable commit history that follows the [Udacity Git Commit Message Style Guide](https://udacity.github.io/git-styleguide/).
+[ ] Update the README.md with any important info that follows from or motivated your changes.
+[ ] Update the TODO.md to reflect your tasks and wishlist, but be cautious about removing existing list items.
+[ ] Add a note about your contribution to the CONTRIBUTING.md [Contribution History](#contributionhistory) below.
+[ ] Submit your Pull Request to the project owner.
 
 ## Academic Constraints
 
