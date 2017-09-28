@@ -2,14 +2,56 @@
 
 This is a bookshelf app to help readers organize their favorite tomes, built as the final assessment project for Udacity's React Fundamentals course. This project was bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app) and the starter CSS and HTML templates from Udacity.
 
+## Purpose
+
+Readers like to keep track of and discuss their past, present and future reads. They're also familiar with the visuals of organizing and browsing bookshelves. MyReads is a place to search for, shelve and look through through books you want to read, are reading or have already read.
+
 ## Installation
-Once the project folder is downloaded, forked or cloned, the app can be run locally from within the project folder with the command **npm start**.
 
-TODO: Needs to mention **npm install** and requirements (node, npm)
+This is a light project built with React and JS.
 
-## Why MyReads?
+Requirements:
+* You simply need [Node.js](https://nodejs.org), [npm](https://www.npmjs.com/) and your browser to get started.
+* Development aids like the Chrome [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) will come in handy if you plan to tinker.
 
-Readers like to keep track of and discuss their past, present and future reads. They're also familiar with the visuals of organizing books on shelves and browsing through them. This app is a place to search for, shelf and look through through books you want to read, are reading and have already read.
+Guide:
+* Download, fork or clone the project.
+* Navigate to your local project folder and run `npm install` to install project dependencies. 
+* Run the command `npm start` from within the project folder to start the local server.
+* Once the project compiles, view the development build in your browser.
+
+## What You're Getting
+```bash
+├── CONTRIBUTING.md
+├── README.md - This file.
+├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for the provided Udacity backend.
+├── TODO.md # Completed tasks and future features wishlist for the app.
+├── package.json # npm package manager file, not modified from Udacity project.
+├── public
+│   ├── favicon.ico # Site icon
+│   └── index.html # Base template, not modified from Udacity project.
+└── src
+    ├── App.css # Styles for the app.
+    ├── App.js # The app's root component.
+    ├── App.test.js # Provided with Create React App for testing.
+    ├── components # All React components for the app.
+    │   ├── App.js
+    │   ├── Book.js    
+    │   ├── ListBooks.js
+    │   ├── Search.js
+    │   └── Shelf.js
+    ├── icons # Images for the app.
+    │   ├── arrow-back.svg
+    │   ├── search.svg    
+    │   ├── shelf.svg
+    │   └── shelves.svg
+    ├── scripts # Additional JavaScript behaviors.
+    │   └── ScrollAnims.js
+    ├── utils
+    │   └── BooksAPI.js # API for the provided Udacity backend. Instructions for the methods are below.
+    ├── index.css # Global styles.
+    └── index.js # File used for DOM rendering only.
+```
 
 ## API & Backend Server
 
@@ -18,6 +60,8 @@ From Udacity: To simplify your development process, we've provided a backend ser
 * [`getAll`](#getall)
 * [`update`](#update)
 * [`search`](#search)
+
+The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list contains the _only_ terms that will work with the backend.
 
 ### `getAll`
 
@@ -57,41 +101,7 @@ search(query, maxResults)
 
 ## Tests
 
-Testing not currently implemented. Once it is, include here a short description of how to run the tests, along with an example.
-
-## TL;DR
-
-To get started developing right away:
-
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
-
-## What You're Getting
-```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
-├── public
-│   ├── favicon.ico # React Icon, You may change if you wish.
-│   └── index.html # DO NOT MODIFY
-└── src
-    ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
-```
-
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
-
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
+Testing not currently implemented. Once it is, update this to include a short description of how to run the tests, along with examples.
 
 ## Create React App
 
@@ -100,5 +110,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Contributing
 
 If you'd like to add a feature or fix a bug in this application, please fork the repository and make a pull request with your updated code.
+
+Words to live by from the original Udacity template: "Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed."
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).

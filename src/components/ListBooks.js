@@ -25,7 +25,7 @@ function ListBooks(props) {
       {/* end div list-books-content */}
       </div>
       <div className="open-search">
-        <Link to="/search">Add a book</Link>
+        <Link to="/search"><span className="open-search-text">Add books</span></Link>
       </div>
     </div>
   );

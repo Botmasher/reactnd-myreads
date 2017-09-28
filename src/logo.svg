@@ -1,0 +1,20 @@
+<svg width="399.99999999999994" height="99.99999999999999" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <defs>
+  <filter id="svg_2_blur">
+   <feGaussianBlur stdDeviation="0" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="102" width="402" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text stroke="#000" transform="matrix(0.9704844412226962,0,0,0.9937899228176564,5.639434274489332,-0.47232546687581234) " font-weight="bold" font-style="normal" xml:space="preserve" text-anchor="start" font-family="Georgia, Times, 'Times New Roman', serif" font-size="90" id="svg_1" y="69.986112" x="118.807587" stroke-width="0" fill="#ffffff">Reads</text>
+  <text stroke="#000" transform="rotate(-0.324105829000473 66.45861816405906,49.85395050048856) matrix(1.000400727502523,0,0,0.9937450162706086,36.57946340404844,0.6402821882947606) " filter="url(#svg_2_blur)" font-weight="normal" font-style="italic" xml:space="preserve" text-anchor="start" font-family="'Times New Roman', Times, serif" font-size="90" id="svg_2" y="79.840375" x="-26.132077" stroke-width="0" fill="#ccdbe2">My</text>
+ </g>
+</svg>

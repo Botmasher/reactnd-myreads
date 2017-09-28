@@ -3,6 +3,7 @@ import Search from './Search';
 import ListBooks from './ListBooks';
 import { Route, Link } from 'react-router-dom';
 import * as BooksAPI from '../utils/BooksAPI';
+import logo from '../logo.svg'
 import '../App.css';
 
 /*
@@ -105,11 +106,13 @@ class App extends React.Component {
     return (
       <div className="app">
         
-        {/* App title and header */}
+        {/* app title logo */}
         <Link className="app-title" to="/">
-          <h1>MyReads</h1>
+          <h1>
+            <img className="app-title-logo" src={logo} alt="MyReads" />
+          </h1>
         </Link>
-
+        
         {/* route to Search or List component */}
         <Route path="/search" render={() => (
           <Search

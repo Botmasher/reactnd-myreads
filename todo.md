@@ -41,16 +41,21 @@
 
 # Beyond mvp
 - "Above and Beyond" instructor lesson vid suggestions
-	- [ ] CSS styles *
+	- [X] CSS styles *
 	- [ ] rate books
 	- [ ] bulk move books from one shelf to another
-- [ ] add store for data
-- [ ] brainstorm other ways to use data 
-- [ ] search filters like by author, title
-- [ ] highlighting for selected book
-	- [ ] same inside of the search results
+- [ ] accessibility
+	- [ ] dropdown on interacting with whole book instead of small control
+	- [ ] brainstorm other ways to use data
+- [ ] upgrade search
+	- [ ] redo search page bar and back button to be more integrated, intuitive, less modular 
+	- [ ] add search filters like by author, title
+- [ ] ability to organize shelves
+- [X] highlighting for selected book
+	- [X] same inside of the search results
 - [ ] add user to store, ability to log in *
 - [ ] keep user notes about the book *
+- [ ] fade book in/out when reshelved using transitions and interim anim classNames
 - [X] Refactor need to hard code shelves (e.g. if API changes book.shelf property) *
 	- [X] Book component
 	- [X] App component
