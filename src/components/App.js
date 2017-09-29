@@ -22,6 +22,8 @@ import '../App.css';
  * 4) The dropdown should correctly and immediately reshelf a book
  * 5) Each book left in shelf should not have broken "bad dropdown"
  * 6) No other book in search results should have broken "bad dropdown"
+
+ * Is Shelf rerendering on book handler change? It should be, and I guess it is, but maybe only ListBooks is?
  */
 
 // Root app component - parent of Search and ListBooks
@@ -60,11 +62,9 @@ class App extends React.Component {
   }
 
   // Construct and save both formal names and display headings for all shelves found in book data
-  buildShelves = (booksData) => {
-    // obtain set of all unique shelves in book data
-    const shelves = booksData.reduce((allShelves, currentBook) => {
-      return allShelves.add(currentBook.shelf);
-    }, new Set() );
+  buildShelves = (shelvesData) => {
+    // obtain set of all unique shelves from data
+    const shelves = Object.keys(shelvesData);
     // return each shelf's name (like 'wantToRead') and pretty heading (like 'Want to Read')
     return [...shelves, 'none'].map(shelf => (
       {name: shelf, heading: this.prettifyCamelCaseTitle(shelf)}
@@ -90,11 +90,15 @@ class App extends React.Component {
   
   // Get API data once component has rendered
   componentDidMount() {
+    // Store data for currently shelved books
     BooksAPI.getAll().then((books) => {
-      // use the array to build shelves for each book's listed shelf property
-      const shelves = this.buildShelves(books);
-      // save all books and shelves
-      this.setState({books, shelves});
+      this.setState({books});
+    });
+    // Empty API request to return all active shelves
+    BooksAPI.update('','none').then((booksPerShelf) => {
+      // store both API shelf name and pretty display text for all shelves
+      const shelves = this.buildShelves(booksPerShelf);
+      this.setState({shelves});
     });
   }
 

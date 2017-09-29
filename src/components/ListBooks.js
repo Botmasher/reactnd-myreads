@@ -17,6 +17,7 @@ function ListBooks(props) {
                 shelves={props.shelves}
                 books={props.books.filter(book => book.shelf===shelf.name)}
                 handleReshelving={props.handleReshelving}
+                titleLength={props.titleLength}
               />
             )
           ))}
@@ -33,7 +34,8 @@ function ListBooks(props) {
 ListBooks.propTypes = {
   handleReshelving: PropTypes.func,   // prop threading for App to change a book's shelf
   books: PropTypes.array,             // list of all books to display in shelves
-  shelves: PropTypes.array            // prop threading for Book dropdown list of all shelves
+  shelves: PropTypes.array,           // prop threading for Book dropdown list of all shelves
+  titleLength: PropTypes.number       // prop threading for character count at which display titles are truncated
 };
 
 export default ListBooks;
