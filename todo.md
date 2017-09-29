@@ -40,7 +40,7 @@
 - declaratively map/filter/reduce over arrays (state)
 
 # Beyond mvp
-- "Above and Beyond" instructor lesson vid suggestions
+- [ ] "Above and Beyond" instructor lesson vid suggestions
 	- [X] CSS styles *
 	- [ ] rate books
 	- [ ] bulk move books from one shelf to another

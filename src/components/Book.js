@@ -20,10 +20,10 @@ class Book extends React.Component {
 		this.props.handleReshelving(this.props.data, event.target.value);
 	};
 
-	// Cut down excess text at a letter or number
-		// e.g. long book titles
+	// Cut down excess text at a letter or number, e.g. long book titles
 	truncateTextAtAlphanum(txt, cutIndex) {
 		// check if truncated text ends in letter or numeral
+		// regex test from stackoverflow answer by user113716: https://stackoverflow.com/questions/4434076/best-way-to-alphanumeric-check-in-javascript
 		if (/[^a-zA-Z0-9]/.test(txt[cutIndex]) || cutIndex===0) {
 			return `${txt.slice(0, cutIndex)}...`;
 		}

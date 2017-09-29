@@ -28,6 +28,7 @@ class App extends React.Component {
   // Prepare text for user-friendly display
   prettifyCamelCaseTitle = (camelCaseText) => {
     // split text into capitalized words and iterate through each word
+    // regex pinpointed by stackoverflow user andrewmu: https://stackoverflow.com/questions/7888238/javascript-split-string-on-uppercase-characters
     return camelCaseText.match(/([A-Z]?[^A-Z]*)/g).slice(0,-1).map((word, i) => {
       // capitalize the first word
       if (i===0) {
