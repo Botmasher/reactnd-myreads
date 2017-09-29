@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 class Search extends React.Component {
   state = {
     query: '',          // empty query string to fill from controlled component
-    maxResults: 20,     // results count limit to pass into API .search()
     results: []         // store results data returned from API .search()
   };
 
@@ -38,7 +37,7 @@ class Search extends React.Component {
          *  - books passed in from BooksAPI .search() query DON'T have .shelf
          *  - books passed in from BooksAPI .getAll() fetch DO have .shelf
          */
-        BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
+        BooksAPI.search(this.state.query).then((results) => {
           // get shelf property from parent since shelf missing from query results
           const properlyShelvedBooks = [];
           !results.error && results.map(unshelvedBook => (

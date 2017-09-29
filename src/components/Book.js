@@ -11,7 +11,7 @@ function Book(props) {
 		}
 		// cut the text one character sooner
 		return truncateTextAtAlphanum(txt, cutIndex-1);
-	}
+	};
 
 	// fallback thumbs for books that have undefined images
 	props.data.imageLinks===undefined && (
@@ -29,7 +29,7 @@ function Book(props) {
 		: ``;
 
 	// format book title for display
-	const title = props.maxTitleLength && props.data.title.length>=props.maxTitleLength
+	const title = props.maxTitleLength && props.data.title && props.data.title.length>=props.maxTitleLength
 		? truncateTextAtAlphanum(props.data.title, props.maxTitleLength)
 		: props.data.title;
 

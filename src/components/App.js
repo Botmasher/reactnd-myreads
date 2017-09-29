@@ -6,15 +6,7 @@ import * as BooksAPI from '../utils/BooksAPI';
 import logo from '../logo.svg'
 import '../App.css';
 
-/*  Issues:
- *  - on fresh load, since database has no books in shelf, None is the only option
- *    - me: what's the API query that allows you to see books organized by shelves again?
- *  - "Bad Dropdowns": when change a book's shelf in main page, it moves BUT book that takes its place now dropsdown to new shelf!
- *    - this problem disappears on refresh (the explanation's more confusing than visuals, so try it)
- *    - it's worse when you start recategorizing multiple books in a shelf, or setting the bad-dropdown book's shelf
- *  - empty shelves on main page actually become deleted shelves on main page
- *    - if a shelf isn't in the API, it doesn't exist anywhere in App
- *
+/*
  * Testing:
  * 1) Set all books' .shelf to none in API. Do shelves appear on main page? Do shelves appear in book dropdown?
  * 2) Ensure three shelves show up on home page
@@ -22,15 +14,12 @@ import '../App.css';
  * 4) The dropdown should correctly and immediately reshelf a book
  * 5) Each book left in shelf should not have broken "bad dropdown"
  * 6) No other book in search results should have broken "bad dropdown"
-
- * Is Shelf rerendering on book handler change? It should be, and I guess it is, but maybe only ListBooks is?
  */
 
 // Root app component - parent of Search and ListBooks
 class App extends React.Component {
   state = {
-    books: [],                                // app representation of book data in API
-    shelves: [{name: '', heading: ''}]        // name and display text for each app shelf, based on shelves in API data
+    books: {}       // app representation of books per shelf in API
   };
 
   // words to uncaps in pretty display titles
@@ -38,9 +27,12 @@ class App extends React.Component {
 
   // Take in a book id and return its current shelf - added to handle unshelved API query results
   checkShelf = (book) => {
-    const shelvedBooks = this.state.books.filter(b => b.id===book.id);
-    // return shelved query results to the Search component
-    return shelvedBooks.length > 0 ? shelvedBooks[0].shelf : 'none';
+    // find any book in the local book data with a matching id
+    const matchingShelvedBook = Object.keys(this.state.books).reduce((booksSoFar, currentShelf) => {
+      return [...booksSoFar, ...this.state.books[currentShelf]];
+    }, []).filter(b => b.id===book.id);
+    // if there is local data for a book with a matching id, output the book's shelf
+    return matchingShelvedBook[0] && matchingShelvedBook[0].shelf ? matchingShelvedBook[0].shelf: 'none';
   }
 
   // Prepare text for user-friendly display
@@ -61,48 +53,48 @@ class App extends React.Component {
     }).join(' ');   // turn array back into a single string
   }
 
-  // Construct and save both formal names and display headings for all shelves found in book data
-  buildShelves = (shelvesData) => {
-    // obtain set of all unique shelves from data
-    const shelves = Object.keys(shelvesData);
-    // return each shelf's name (like 'wantToRead') and pretty heading (like 'Want to Read')
-    return [...shelves, 'none'].map(shelf => (
-      {name: shelf, heading: this.prettifyCamelCaseTitle(shelf)}
-    ));
-  }
-
   // Change the book's backend shelf and update the local shelf state to match
-  handleReshelving = (reshelvedBook, shelf) => {
+  handleReshelving = (reshelvedBook, newShelf) => {
+    console.log(newShelf);
+    console.log(reshelvedBook.shelf);
     // update the book's shelf property through the backend
     // note that updating shelf to 'none' will remove from display shelves
-    BooksAPI.update(reshelvedBook, shelf)
+    BooksAPI.update(reshelvedBook, newShelf)
     // update book's state in app
     .then((updatedShelves) => {  
       // API returns {shelf:[id,...],} pairs for all shelves - update state with reshelvedBook instead   
       // Use the passed-in reshelvedBook object to update local shelf state for the book
-      this.setState({books: [
-          ...this.state.books.filter(b => b.id!==reshelvedBook.id),
-          {...reshelvedBook, shelf}
-        ]
-      });
+      BooksAPI.getAll().then(allBooks => this.updateLocalBookshelves(allBooks, updatedShelves));
     });
-  }
-  
+  };
+
+  // Update the local state with both books and shelves, even empty shelves
+  updateLocalBookshelves = (allShelvedBooks, bookIdsPerShelf) => {
+    // store shelf and book data for all books to avoid hardcoding the three shelves
+    this.setState({
+      books: Object.keys(bookIdsPerShelf).reduce((bookshelves, shelf) => {
+        bookshelves[shelf] = allShelvedBooks.filter(book => book.shelf===shelf);
+        return bookshelves;
+      }, {})
+    });
+  };
+
   // Get API data once component has rendered
   componentDidMount() {
-    // Store data for currently shelved books
+    const allShelvedBooks = [];
+    // store data for currently shelved books
     BooksAPI.getAll().then((books) => {
-      this.setState({books});
-    });
-    // Empty API request to return all active shelves
-    BooksAPI.update('','none').then((booksPerShelf) => {
-      // store both API shelf name and pretty display text for all shelves
-      const shelves = this.buildShelves(booksPerShelf);
-      this.setState({shelves});
+      allShelvedBooks.push(...books);
+      // empty API request to return all active shelves
+      BooksAPI.update('','none').then((booksPerShelf) => {
+        this.updateLocalBookshelves(allShelvedBooks, booksPerShelf);
+      });
     });
   }
 
   render() {
+    // send subcomponents formatted shelf names based on shelves in state
+    const shelves = [...Object.keys(this.state.books), 'none'].map(shelf => ({name: shelf, heading: this.prettifyCamelCaseTitle(shelf)}));
     return (
       <div className="app">
         {/* app title logo */}
@@ -116,7 +108,7 @@ class App extends React.Component {
           <Search
             handleReshelving={this.handleReshelving}
             checkShelf={this.checkShelf}
-            shelves={this.state.shelves}
+            shelves={shelves}
           />
         )}/>
         {/* route to display bookshelves */}
@@ -124,7 +116,7 @@ class App extends React.Component {
           <ListBooks
             handleReshelving={this.handleReshelving}
             books={this.state.books}
-            shelves={this.state.shelves}
+            shelves={shelves}
             titleLength={40}
           />
         )} />

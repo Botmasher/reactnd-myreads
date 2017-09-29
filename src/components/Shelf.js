@@ -3,14 +3,15 @@ import Book from './Book';
 import PropTypes from 'prop-types';
 
 // Single shelf component - parent of books
-function Shelf(props) {  
+function Shelf(props) {
   // Iterate over books in this shelf and display each book component
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{props.heading}</h2>
       <div className="bookshelf-books">
+        
         <ol className="books-grid">
-          {props.books.map((book) => (
+          {props.books.length>0 && props.books.map(book => (
             <li key={book.id}>
               <Book
                 data={book}

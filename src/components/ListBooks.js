@@ -11,12 +11,12 @@ function ListBooks(props) {
         <div className="bookshelves-wrapper">
           {/* Iterate through passed-in shelves and create each bookshelf with its shelved books */}
           {props.shelves.map((shelf) => (
-            shelf!==undefined && shelf.name!=='none' && (
+            shelf!==undefined && shelf.name!=='none' && props.books[shelf.name].length>0 && (
               <Shelf
                 key={shelf.name}
                 heading={shelf.heading}
                 shelves={props.shelves}
-                books={props.books.filter(book => book.shelf===shelf.name)}
+                books={props.books[shelf.name]}
                 handleReshelving={props.handleReshelving}
                 titleLength={props.titleLength}
               />
@@ -34,7 +34,7 @@ function ListBooks(props) {
 
 ListBooks.propTypes = {
   handleReshelving: PropTypes.func,   // prop threading for App to change a book's shelf
-  books: PropTypes.array,             // list of all books to display in shelves
+  books: PropTypes.object,            // list of all books to display in shelves
   shelves: PropTypes.array,           // prop threading for Book dropdown list of all shelves
   titleLength: PropTypes.number       // prop threading for character count at which display titles are truncated
 };
