@@ -100,6 +100,7 @@ Relations between components:
 To simplify the initial class project, Udacity provided a backend server to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods needed to perform necessary operations on the backend:
 
 * [`getAll`](#getall)
+* [`get`](#get)
 * [`update`](#update)
 * [`search`](#search)
 
@@ -115,6 +116,18 @@ getAll()
 
 * Returns a Promise which resolves to a JSON object containing a collection of book objects.
 * This collection represents the books currently in the app bookshelves.
+
+### `get`
+
+Method Signature:
+
+```js
+get(bookId)
+```
+
+* bookId: `<String>` to match to an `id` attribute of a book currently in the app bookshelves.
+* Returns a Promise which resolves to a JSON object containing a book object.
+* This object represents the requested data for a single book.
 
 ### `update`
 

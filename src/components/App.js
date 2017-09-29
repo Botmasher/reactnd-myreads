@@ -6,13 +6,29 @@ import * as BooksAPI from '../utils/BooksAPI';
 import logo from '../logo.svg'
 import '../App.css';
 
+/*  Issues:
+ *  - on fresh load, since database has no books in shelf, None is the only option
+ *    - me: what's the API query that allows you to see books organized by shelves again?
+ *  - "Bad Dropdowns": when change a book's shelf in main page, it moves BUT book that takes its place now dropsdown to new shelf!
+ *    - this problem disappears on refresh (the explanation's more confusing than visuals, so try it)
+ *    - it's worse when you start recategorizing multiple books in a shelf, or setting the bad-dropdown book's shelf
+ *  - empty shelves on main page actually become deleted shelves on main page
+ *    - if a shelf isn't in the API, it doesn't exist anywhere in App
+ *
+ * Testing:
+ * 1) Set all books' .shelf to none in API. Do shelves appear on main page? Do shelves appear in book dropdown?
+ * 2) Ensure three shelves show up on home page
+ * 3) Ensure three shelves show in dropdown menus in both home and search pages
+ * 4) The dropdown should correctly and immediately reshelf a book
+ * 5) Each book left in shelf should not have broken "bad dropdown"
+ * 6) No other book in search results should have broken "bad dropdown"
+ */
+
 // Root app component - parent of Search and ListBooks
 class App extends React.Component {
   state = {
-    // app representation of book data in API
-    books: [],
-    // name and display text for each app shelf, based on shelves in API data
-    shelves: [{name: '', heading: ''}]
+    books: [],                                // app representation of book data in API
+    shelves: [{name: '', heading: ''}]        // name and display text for each app shelf, based on shelves in API data
   };
 
   // words to uncaps in pretty display titles
