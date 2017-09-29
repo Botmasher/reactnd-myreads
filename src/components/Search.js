@@ -4,63 +4,55 @@ import Book from './Book';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
+// App search component - parent of books
 class Search extends React.Component {
   state = {
-    query: '',        // empty query string to fill from controlled component
-    maxResults: 20,   // results count limit to pass into API .search()
-    results: []       // store results data returned from API .search()
+    query: '',          // empty query string to fill from controlled component
+    maxResults: 20,     // results count limit to pass into API .search()
+    results: []         // store results data returned from API .search()
   };
 
   static propTypes = {
     handleReshelving: PropTypes.func,   // prop threading for App book shelf update
     checkShelf: PropTypes.func,         // check shelving for a book in the bookstore
-    shelves: PropTypes.array            // prop threading for all shelves
+    shelves: PropTypes.array            // prop threading for Book dropdown list of all shelves
   };
 
-  // Update shelf in search results and pass shelf up to App for proper reshelving
+  // Update a book's shelf in local results and in the root app data
   updateResultShelf = (book, shelf) => {
+    // update results to contain the new shelf and trigger rerendering of the changed book
     this.setState((prevState) => {
       const results=prevState.results.map(result => result.id===book.id ? {...book, shelf} : result);
       return {results};
     });
+    // pass shelf up to App for proper reshelving
     this.props.handleReshelving(book, shelf);
-  }
+  };
 
-  // controlled component for input search box - called on query input
+  // Controlled input component handler called on query input
   handleInputField = (e) => {
     this.setState({query: e.target.value}, () => {
       if (this.state.query!=='') {
-        // get query results from the API
-        // CAUTION: book objects differ depending on where fetched!
-        //  - books passed in from BooksAPI .search() query DON'T have .shelf
-        //  - books passed in from BooksAPI .getAll() fetch DO have .shelf
-        // SOLUTION: add .shelf to searched books
-        //  - check with App component if the book is in state
-        //  - if the book is in state, use that shelf
-        //  - otherwise, use a default .shelf
-
+        /* Fetch query results from the API
+         * CAUTION: book objects differ depending on where fetched!
+         *  - books passed in from BooksAPI .search() query DON'T have .shelf
+         *  - books passed in from BooksAPI .getAll() fetch DO have .shelf
+         */
         BooksAPI.search(this.state.query, this.state.maxResults).then((results) => {
-          // get properties from parent since query results are missing certain properties
+          // get shelf property from parent since shelf missing from query results
           const properlyShelvedBooks = [];
           !results.error && results.map(unshelvedBook => (
             properlyShelvedBooks.push(
-              // add the parent authors and shelf properties since query results lack them
               {
                 ...unshelvedBook,
                 shelf: this.props.checkShelf(unshelvedBook)
               }
             )
           ));
-
           // update local results to include the shelf property
           this.setState({results: properlyShelvedBooks});
         });
-        // TODO deal with empty results array [] - render out results are 0
-        // TODO display zero results instead of previous results when erase search
-        // TODO update search results when type a single letter
-        // TODO poor results
-          // - "stylistics" query does not match to "Practical Stylistics"
-          // - "ra" query matches to "Robotics"
+      // deal with empty query since BooksAPI will not resolve with good data against it
       } else {
         this.setState({results: []});
       }
@@ -68,20 +60,12 @@ class Search extends React.Component {
   };
 
   render() {
-
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
+            {/* Input controlled via query state and event handler above */}
             <input
               type="text"
               value={this.state.query}
@@ -92,18 +76,7 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {/*
-            problems:
-              - results empty: map cannot map over undefined
-                - current workaround: set this.state.results only if API results are >-1
-              - query empty: cannot get API results for undefined (403 error)
-                - current workaround: only run API .search() if query is not empty string
-              - book component shelf: for all books their shelf is undefined
-                - when subcomponents of Search only (not when in Shelf)
-              - book added to shelf: book's handleReshelving is not a function
-                - run in: Books.js input onChange
-                - current workaround: none
-          */}
+            {/* List all books in results, including reshelved books */}
             {this.state.results.length>0 && this.state.results.map(book => (
               <li key={book.id}>
                 <Book
@@ -113,6 +86,7 @@ class Search extends React.Component {
                 />
               </li>
             ))}
+            {/* Cases where there are not good results to display */}
             {this.state.results.length<1 && this.state.query!=='' && this.state.query.length>1 && <p>No results match your search.</p>}
             {this.state.query==='' && <p>Results will display here.</p>}
             </ol>

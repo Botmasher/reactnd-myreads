@@ -6,28 +6,10 @@ import * as BooksAPI from '../utils/BooksAPI';
 import logo from '../logo.svg'
 import '../App.css';
 
-/*
- * Behavior:
- *  - App component routes to a list of Shelves or a Search component
- *  - Shelf component lists its associated Book components.
- *  - Search component returns query results as Book components.
- *  - Book component takes in JSON object and uses title, author, thumb, id, shelf.
- *  - Book component has dropdown that updates its shelf categorization.
- */
+// Root app component - parent of Search and ListBooks
 class App extends React.Component {
   state = {
-    /*
-     * Store structure:
-     * {books, shelves}
-     * Property structure for 'books'
-     * [{book_1}, {book_2}, ... {book_n}]
-     * Property structure for each book of books - directly mirrors from API results
-     *
-     * Map of relations:
-     * - Book has one Shelf
-     * - Shelf has many Books
-     * - Store has many Shelves
-     */
+    // app representation of book data in API
     books: [],
     // name and display text for each app shelf, based on shelves in API data
     shelves: [{name: '', heading: ''}]
@@ -36,24 +18,27 @@ class App extends React.Component {
   // words to uncaps in pretty display titles
   uncapsWordsSet = new Set(['of', 'at', 'to', 'for', 'in', 'on', 'off', 'among', 'around', 'about', 'under', 'above', 'across', 'by', 'until', 'beside', 'before', 'after', 'towards', 'before', 'over', 'through', 'onto', 'into', 'from', 'and', 'or', 'but', 'a', 'an', 'the']);
 
-  // Take in a book id and return its current shelf (if any)
-  // - added to handle API query results, which return objects with no shelf property
-  // - only called within the Search component to shelve query results 
+  // Take in a book id and return its current shelf - added to handle unshelved API query results
   checkShelf = (book) => {
     const shelvedBooks = this.state.books.filter(b => b.id===book.id);
+    // return shelved query results to the Search component
     return shelvedBooks.length > 0 ? shelvedBooks[0].shelf : 'none';
   }
 
-  // Split text at caps and prepare for user-friendly display
+  // Prepare text for user-friendly display
   prettifyCamelCaseTitle = (camelCaseText) => {
-    // split into words and iterate through each word
+    // split text into capitalized words and iterate through each word
     return camelCaseText.match(/([A-Z]?[^A-Z]*)/g).slice(0,-1).map((word, i) => {
-      // capitalize most words including any first word
-      if (!this.uncapsWordsSet.has(word.toLowerCase()) ||  i===0) {
+      // capitalize the first word
+      if (i===0) {
         return word.charAt(0).toUpperCase() + word.slice(1);
+      // leave most words capitalized
+      } else if (!this.uncapsWordsSet.has(word.toLowerCase())) {
+        return word;
+      // uncaps any word found in the uncapsed words set
+      } else {
+        return word.toLowerCase();
       }
-      // uncapitalize words found in the uncapsed words set
-      return word.toLowerCase();
     }).join(' ');   // turn array back into a single string
   }
 
@@ -70,18 +55,13 @@ class App extends React.Component {
   }
 
   // Change the book's backend shelf and update the local shelf state to match
-  // - take a single book object and the new shelf
-  // - run an API update
-  // - update the local books array
   handleReshelving = (reshelvedBook, shelf) => {
     // update the book's shelf property through the backend
     // note that updating shelf to 'none' will remove from display shelves
     BooksAPI.update(reshelvedBook, shelf)
     // update book's state in app
-    .then((updatedShelves) => {
-      
-      // API returns {shelf:[id,...],} pairs for all shelves - update state with reshelvedBook instead
-      
+    .then((updatedShelves) => {  
+      // API returns {shelf:[id,...],} pairs for all shelves - update state with reshelvedBook instead   
       // Use the passed-in reshelvedBook object to update local shelf state for the book
       this.setState({books: [
           ...this.state.books.filter(b => b.id!==reshelvedBook.id),
@@ -93,7 +73,6 @@ class App extends React.Component {
   
   // Get API data once component has rendered
   componentDidMount() {
-    // then-chaining on API promise to get resolved array object
     BooksAPI.getAll().then((books) => {
       // use the array to build shelves for each book's listed shelf property
       const shelves = this.buildShelves(books);
@@ -105,15 +84,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        
         {/* app title logo */}
         <Link className="app-title" to="/">
           <h1>
             <img className="app-title-logo" src={logo} alt="MyReads" />
           </h1>
         </Link>
-        
-        {/* route to Search or List component */}
+        {/* route to display search */}
         <Route path="/search" render={() => (
           <Search
             handleReshelving={this.handleReshelving}
@@ -121,6 +98,7 @@ class App extends React.Component {
             shelves={this.state.shelves}
           />
         )}/>
+        {/* route to display bookshelves */}
         <Route exact path="/" render={() => (
           <ListBooks
             handleReshelving={this.handleReshelving}
@@ -128,7 +106,6 @@ class App extends React.Component {
             shelves={this.state.shelves}
           />
         )} />
-
       </div>
     )
   }

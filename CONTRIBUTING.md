@@ -1,6 +1,6 @@
 # How to Contribute
 
-This is a quick guide for users who would like to contribute to MyReads. Please take the time to discuss the change you wish to make with the project owner before you make that change. If you wish to build on the project, simply **fork** or **clone** it and get started following the instructions in README.md!
+This is a quick guide for users who would like to contribute to MyReads. Please take the time to discuss the change you wish to make with the project owner before you make that change. If you merely wish to build on top of the existing project, consider instead **fork**ing or **clone**ing it and following the instructions in README.md!
 
 ## Submitting a Pull Request
 

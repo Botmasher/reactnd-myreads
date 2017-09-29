@@ -53,9 +53,51 @@ Guide:
     └── index.js # File used for DOM rendering only.
 ```
 
+## Overview of Data Structures
+
+The core state representing the current bookstore lives in the root `App` component. The `Search` component also temporarily reads stored search results while the user queries, but it passes any persistent updates to `App`. The `Book` component takes in its data as props threaded down from `App` and calls an `App` handler when updating.
+
+Root app state structure:
+* The state is divided into `{books, shelves}`
+* The `books` property is paired with an array: `[{book_1}, {book_2}, ... {book_n}]`
+    * This array is stored directly from the API results
+    * Each `book` of `books` reflects API results, copying all properties
+* The `shelves` property is paired with an array: `[{shelf_1}, ... {shelf_n}]`
+    * Each `shelf` of `shelves` has a formal `name` and a display text `heading`
+    * The `name` values come from performing a reduce on API results to find each unique `.shelf`
+    * The `heading` values come from prettifying the shelfname into a display-ready string
+
+Relations between components:
+* App has one Search
+* App has one ListBooks 
+* ListBooks has many Shelves
+* Shelf has many Books
+* Search has many Books
+* Book has one Shelf
+
+## Flow through the App
+
+* The root app (App):
+    * stores and updates all shelved books (`state.books`) and active shelves (`state.shelves`)
+    * routes to a list of bookshelves (ListBooks) or a search component (Search)
+* The list of bookshelves (ListBooks):
+    * displays a shelf (Shelf) for each of the active shelves
+    * filters book data for each shelf
+* The shelf (Shelf):
+    * lists its associated Book components
+    * automatically updates when a Book is added or removed
+* The search (Search):
+    * takes input to query the API
+    * checks API results against current shelves
+    * displays books (Book) found in API results
+* The book (Book):
+    * takes in one book's data and turns it into a visual display for that book
+    * has a dropdown menu that updates the book's shelf and automatically displays that new shelf
+    * is highlighted both in BookList and Search when it appears in an active shelf
+
 ## API & Backend Server
 
-From Udacity: To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+To simplify the initial class project, Udacity provided a backend server to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods needed to perform necessary operations on the backend:
 
 * [`getAll`](#getall)
 * [`update`](#update)
@@ -72,7 +114,7 @@ getAll()
 ```
 
 * Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
+* This collection represents the books currently in the app bookshelves.
 
 ### `update`
 
@@ -97,7 +139,7 @@ search(query, maxResults)
 * query: `<String>`
 * maxResults: `<Integer>` Due to the nature of the backend server, search results are capped at 20, even if this is set higher.
 * Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
+* These books do not know which shelf they are on. They are raw results only. The project code contains workarounds to ensure books have the correct state while on the search page.
 
 ## Tests
 
