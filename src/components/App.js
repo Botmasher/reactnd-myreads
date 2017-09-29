@@ -125,6 +125,7 @@ class App extends React.Component {
             handleReshelving={this.handleReshelving}
             books={this.state.books}
             shelves={this.state.shelves}
+            titleLength={40}
           />
         )} />
       </div>

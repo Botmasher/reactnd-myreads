@@ -16,8 +16,8 @@ function Book(props) {
 	// fallback thumbs for books that have undefined images
 	props.data.imageLinks===undefined && (
 		props.data.imageLinks = {
-			thumbnail: 'https://placebear.com/128/180',
-			smallThumbnail: 'https://placebear.com/128/180'
+			thumbnail: 'http://dummyimage.com/128x180/d/0?text=No%20Cover',
+			smallThumbnail: 'http://dummyimage.com/128x180/d/0?text=No%20Cover'
 		}
 	);
 
