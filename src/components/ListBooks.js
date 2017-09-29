@@ -10,10 +10,11 @@ function ListBooks(props) {
       <div className="list-books-content">
         <div className="bookshelves-wrapper">
           {/* Iterate through passed-in shelves and create each bookshelf with its shelved books */}
-          {props.shelves.map((shelf, i) => (
+          {props.shelves.map((shelf) => (
             shelf!==undefined && shelf.name!=='none' && (
-              <Shelf heading={shelf.heading}
-                key={i}
+              <Shelf
+                key={shelf.name}
+                heading={shelf.heading}
                 shelves={props.shelves}
                 books={props.books.filter(book => book.shelf===shelf.name)}
                 handleReshelving={props.handleReshelving}
