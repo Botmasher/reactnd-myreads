@@ -3,13 +3,12 @@ import Shelf from './Shelf'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// Books list component for displaying all bookshelves - parent of shelves
+// Bookshelves list - parent of Shelves
 function ListBooks(props) {
   return (
     <div className="list-books">
       <div className="list-books-content">
         <div className="bookshelves-wrapper">
-          {/* iterate through passed-in shelves and create each bookshelf with its shelved books */}
           {props.shelves.map((shelf) => (
             shelf!==undefined && shelf.name!=='none' && (
               <Shelf
@@ -24,7 +23,6 @@ function ListBooks(props) {
           ))}
         </div>
       </div>
-      {/* link to redirect to search component */}
       <div className="open-search">
         <Link to="/search"><span className="open-search-text">Add books</span></Link>
       </div>

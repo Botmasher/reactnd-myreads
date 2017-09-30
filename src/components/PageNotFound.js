@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Component to display when routed to incorrect page
 function PageNotFound(props) {
 	return (
 		<div className="error-block">
