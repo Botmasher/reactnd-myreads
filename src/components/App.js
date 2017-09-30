@@ -55,8 +55,6 @@ class App extends React.Component {
 
   // Change the book's backend shelf and update the local shelf state to match
   handleReshelving = (reshelvedBook, newShelf) => {
-    console.log(newShelf);
-    console.log(reshelvedBook.shelf);
     // update the book's shelf property through the backend
     // note that updating shelf to 'none' will remove from display shelves
     BooksAPI.update(reshelvedBook, newShelf)

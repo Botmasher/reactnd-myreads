@@ -41,7 +41,7 @@ function Book(props) {
 					style={{ backgroundImage: `url(${props.data.imageLinks.smallThumbnail})`}}
 				></div>
 				<div className="book-shelf-changer">
-					{/* popup options menu to switch shelf */}
+					{/* dropdown options menu to switch shelf */}
 					<select defaultValue={props.data.shelf} onChange={e=>props.handleReshelving(props.data, e.target.value)}>
 						<option value="none" disabled>Move to...</option>
 						{/* display all possible shelves */}
