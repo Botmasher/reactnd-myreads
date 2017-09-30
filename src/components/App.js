@@ -1,20 +1,11 @@
 import React from 'react'
 import Search from './Search';
 import ListBooks from './ListBooks';
-import { Route, Link } from 'react-router-dom';
+import PageNotFound from './PageNotFound';
+import { Switch, Route, Link } from 'react-router-dom';
 import * as BooksAPI from '../utils/BooksAPI';
 import logo from '../logo.svg'
 import '../App.css';
-
-/*
- * Testing:
- * 1) Set all books' .shelf to none in API. Do shelves appear on main page? Do shelves appear in book dropdown?
- * 2) Ensure three shelves show up on home page
- * 3) Ensure three shelves show in dropdown menus in both home and search pages
- * 4) The dropdown should correctly and immediately reshelf a book
- * 5) Each book left in shelf should not have broken "bad dropdown"
- * 6) No other book in search results should have broken "bad dropdown"
- */
 
 // Root app component - parent of Search and ListBooks
 class App extends React.Component {
@@ -101,23 +92,29 @@ class App extends React.Component {
             <img className="app-title-logo" src={logo} alt="MyReads" />
           </h1>
         </Link>
-        {/* route to display search */}
-        <Route path="/search" render={() => (
-          <Search
-            handleReshelving={this.handleReshelving}
-            checkShelf={this.checkShelf}
-            shelves={shelves}
-          />
-        )}/>
-        {/* route to display bookshelves */}
-        <Route exact path="/" render={() => (
-          <ListBooks
-            handleReshelving={this.handleReshelving}
-            books={this.state.books}
-            shelves={shelves}
-            titleLength={40}
-          />
-        )} />
+        
+        {/* exclusive routing */}
+        <Switch>
+          {/* route to display search */}
+          <Route path="/search" render={() => (
+            <Search
+              handleReshelving={this.handleReshelving}
+              checkShelf={this.checkShelf}
+              shelves={shelves}
+            />
+          )}/>
+          {/* route to display bookshelves */}
+          <Route exact path="/" render={() => (
+            <ListBooks
+              handleReshelving={this.handleReshelving}
+              books={this.state.books}
+              shelves={shelves}
+              titleLength={40}
+            />
+          )} />
+          {/* route to 404 error if user navigates to incorrect endpoint */}
+          <Route component={PageNotFound} />
+        </Switch>
       </div>
     )
   }

@@ -21,7 +21,7 @@ body, .app {
   --color-highlight: #a9e6f2;
 }
 
-/* main page */
+/* app header */
 
 .app-title {
   display: block;
@@ -52,6 +52,27 @@ body, .app {
     height: 38px;
   }
 } 
+
+/* error page */
+
+.error-block {
+  text-align: center;
+}
+
+.error-code {
+  font-weight: 10px;
+  font-size: 60px;
+  letter-spacing: 5px;
+  color: var(--color-theme-light);
+  margin-bottom: -30px;
+}
+.error-text {
+  font-weight: 8px;
+  font-size: 18px;
+  color: var(--color-theme-dark);
+}
+
+/* main page */
 
 .list-books-content {
   padding: 0 0 80px;
