@@ -3,6 +3,7 @@ import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import { Debounce } from 'react-throttle';
 
 // Search - parent of Books
 class Search extends React.Component {
@@ -58,12 +59,16 @@ class Search extends React.Component {
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              value={this.state.query}
-              onChange={event => this.handleInputField(event)}
-              placeholder="Search by title or author"
-            />
+            <Debounce time="300" handler="onChange">
+              <input
+                type="text"
+                /*
+                 * value={this.state.query}  // keeps Debouncer from displaying text - see issue https://github.com/gmcquistin/react-throttle/issues/7
+                 */
+                onChange={event => this.handleInputField(event)}
+                placeholder="Search by title or author"
+              />
+            </Debounce>
           </div>
         </div>
         <div className="search-books-results">
