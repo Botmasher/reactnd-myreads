@@ -16,7 +16,7 @@ class App extends React.Component {
   // words to uncaps in pretty display titles
   uncapsWordsSet = new Set(['of', 'at', 'to', 'for', 'in', 'on', 'off', 'among', 'around', 'about', 'under', 'above', 'across', 'by', 'until', 'beside', 'before', 'after', 'towards', 'before', 'over', 'through', 'onto', 'into', 'from', 'and', 'or', 'but', 'a', 'an', 'the']);
 
-  // Take in a book id and return its current shelf - added to handle unshelved API query results
+  // take in a book id and return its current shelf - added to handle unshelved API query results
   checkShelf = (book) => {
     // find any book in the local book data with a matching id
     const matchingShelvedBook = Object.keys(this.state.books).reduce((booksSoFar, currentShelf) => {
@@ -26,7 +26,7 @@ class App extends React.Component {
     return matchingShelvedBook[0] && matchingShelvedBook[0].shelf ? matchingShelvedBook[0].shelf: 'none';
   };
 
-  // Prepare text for user-friendly display
+  // prepare text for user-friendly display
   prettifyCamelCaseTitle = (camelCaseText) => {
     // split text into capitalized words and iterate through each word
     // regex pinpointed by stackoverflow user andrewmu: https://stackoverflow.com/questions/7888238/javascript-split-string-on-uppercase-characters
@@ -44,10 +44,9 @@ class App extends React.Component {
     }).join(' ');   // turn array back into a single string
   };
 
-  // Change the book's backend shelf and update the local shelf state to match
+  // change the book's backend shelf and update the local shelf state to match
   handleReshelving = (reshelvedBook, newShelf) => {
     // update the book's shelf property through the backend
-    // note that updating shelf to 'none' will remove from display shelves
     BooksAPI.update(reshelvedBook, newShelf)
     // update book's state in app
     .then((updatedShelves) => {  
@@ -57,7 +56,7 @@ class App extends React.Component {
     });
   };
 
-  // Update the local state with both books and shelves, even empty shelves
+  // update the local state with both books and shelves, even empty shelves
   updateLocalBookshelves = (allShelvedBooks, bookIdsPerShelf) => {
     // store shelf and book data for all books to avoid hardcoding the three shelves
     this.setState({
@@ -68,7 +67,7 @@ class App extends React.Component {
     });
   };
 
-  // Get API data once component has rendered
+  // get API data once component has rendered
   componentDidMount() {
     const allShelvedBooks = [];
     // store data for currently shelved books
@@ -92,7 +91,6 @@ class App extends React.Component {
             <img className="app-title-logo" src={logo} alt="MyReads" />
           </h1>
         </Link>
-        
         {/* exclusive routing */}
         <Switch>
           {/* route to display search */}

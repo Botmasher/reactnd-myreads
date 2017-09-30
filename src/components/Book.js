@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Book(props) {
-	// Cut down excess text at a letter or number, e.g. long book titles
+	// cut down excess text at a letter or number, e.g. long book titles
 	const truncateTextAtAlphanum = (txt, cutIndex) => {
 		// check if truncated text ends in letter or numeral
 		// regex test from stackoverflow answer by user113716: https://stackoverflow.com/questions/4434076/best-way-to-alphanumeric-check-in-javascript
@@ -53,7 +53,7 @@ function Book(props) {
 					</select>
 				</div>
 		    </div>
-			{/* Display formatted title and author */}
+			{/* display formatted title and author */}
 			<div className="book-title">{title}</div>
 			<div className="book-authors">{authors}</div>
 		</div>

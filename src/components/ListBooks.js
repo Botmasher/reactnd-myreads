@@ -9,7 +9,7 @@ function ListBooks(props) {
     <div className="list-books">
       <div className="list-books-content">
         <div className="bookshelves-wrapper">
-          {/* Iterate through passed-in shelves and create each bookshelf with its shelved books */}
+          {/* iterate through passed-in shelves and create each bookshelf with its shelved books */}
           {props.shelves.map((shelf) => (
             shelf!==undefined && shelf.name!=='none' && (
               <Shelf
@@ -24,7 +24,7 @@ function ListBooks(props) {
           ))}
         </div>
       </div>
-      {/* Link to redirect to search component */}
+      {/* link to redirect to search component */}
       <div className="open-search">
         <Link to="/search"><span className="open-search-text">Add books</span></Link>
       </div>

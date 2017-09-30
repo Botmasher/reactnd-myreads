@@ -17,7 +17,7 @@ class Search extends React.Component {
     shelves: PropTypes.array            // prop threading for Book dropdown list of all shelves
   };
 
-  // Update a book's shelf in local results and in the root app data
+  // update a book's shelf in local results and in the root app data
   updateResultShelf = (book, shelf) => {
     // update results to contain the new shelf and trigger rerendering of the changed book
     this.setState((prevState) => {
@@ -28,15 +28,11 @@ class Search extends React.Component {
     this.props.handleReshelving(book, shelf);
   };
 
-  // Controlled input component handler called on query input
+  // controlled input component handler called on query input
   handleInputField = (e) => {
     this.setState({query: e.target.value}, () => {
       if (this.state.query!=='') {
-        /* Fetch query results from the API
-         * CAUTION: book objects differ depending on where fetched!
-         *  - books passed in from BooksAPI .search() query DON'T have .shelf
-         *  - books passed in from BooksAPI .getAll() fetch DO have .shelf
-         */
+        // fetch query results from the API
         BooksAPI.search(this.state.query).then((results) => {
           // get shelf property from parent since shelf missing from query results
           const properlyShelvedBooks = [];
@@ -75,7 +71,7 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {/* List all books in results, including reshelved books */}
+            {/* list all books in results, including reshelved books */}
             {this.state.results.length>0 && this.state.results.map(book => (
               <li key={book.id}>
                 <Book
@@ -85,7 +81,7 @@ class Search extends React.Component {
                 />
               </li>
             ))}
-            {/* Cases where there are not good results to display */}
+            {/* cases where there are not good results to display */}
             {this.state.results.length<1 && this.state.query!=='' && this.state.query.length>1 && <p>No results match your search.</p>}
             {this.state.query==='' && <p>Results will display here.</p>}
             </ol>
