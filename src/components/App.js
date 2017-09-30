@@ -24,7 +24,7 @@ class App extends React.Component {
     }, []).filter(b => b.id===book.id);
     // if there is local data for a book with a matching id, output the book's shelf
     return matchingShelvedBook[0] && matchingShelvedBook[0].shelf ? matchingShelvedBook[0].shelf: 'none';
-  }
+  };
 
   // Prepare text for user-friendly display
   prettifyCamelCaseTitle = (camelCaseText) => {
@@ -42,7 +42,7 @@ class App extends React.Component {
         return word.toLowerCase();
       }
     }).join(' ');   // turn array back into a single string
-  }
+  };
 
   // Change the book's backend shelf and update the local shelf state to match
   handleReshelving = (reshelvedBook, newShelf) => {

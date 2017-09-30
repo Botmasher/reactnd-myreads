@@ -1,6 +1,6 @@
 # MyReads Project
 
-This is a bookshelf app to help readers organize their favorite tomes, built as the final assessment project for Udacity's React Fundamentals course. This project was bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app) and the starter CSS and HTML templates from Udacity.
+This is a bookshelf app to help readers organize their favorite tomes, built as the final assessment project for Udacity's React Fundamentals course. This project was bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app) and the [starter templates](https://github.com/udacity/reactnd-project-myreads-starter) from Udacity.
 
 ## Purpose
 
@@ -38,6 +38,7 @@ Guide:
     │   ├── App.js
     │   ├── Book.js    
     │   ├── ListBooks.js
+    │   ├── PageNotFound.js
     │   ├── Search.js
     │   └── Shelf.js
     ├── icons # Images for the app.
@@ -58,14 +59,12 @@ Guide:
 The core state representing the current bookstore lives in the root `App` component. The `Search` component also temporarily reads stored search results while the user queries, but it passes any persistent updates to `App`. The `Book` component takes in its data as props threaded down from `App` and calls an `App` handler when updating.
 
 Root app state structure:
-* The state is divided into `{books, shelves}`
-* The `books` property is paired with an array: `[{book_1}, {book_2}, ... {book_n}]`
-    * This array is stored directly from the API results
-    * Each `book` of `books` reflects API results, copying all properties
-* The `shelves` property is paired with an array: `[{shelf_1}, ... {shelf_n}]`
-    * Each `shelf` of `shelves` has a formal `name` and a display text `heading`
-    * The `name` values come from performing a reduce on API results to find each unique `.shelf`
-    * The `heading` values come from prettifying the shelfname into a display-ready string
+* The state contains and updates `{books}`
+* The `books` property is paired with an object: `{shelf_1: [book_1, book_2, ... book_n], ... shelf_n}`
+    * This object is stored from combining two API results
+        * results from `.update()` contain shelf data and book ids but lack valuable book data
+        * results from `.getAll()` contain book data but lack valuable shelf data when no book is assigned to a shelf
+    * Each book within in each shelf's array stores all properties from the API both on initialization and update
 
 Relations between components:
 * App has one Search
@@ -78,10 +77,10 @@ Relations between components:
 ## Flow through the App
 
 * The root app (App):
-    * stores and updates all shelved books (`state.books`) and active shelves (`state.shelves`)
+    * stores and updates all shelved books (`state.books`)
     * routes to a list of bookshelves (ListBooks) or a search component (Search)
 * The list of bookshelves (ListBooks):
-    * displays a shelf (Shelf) for each of the active shelves
+    * displays a shelf (Shelf) for each of the app shelves
     * filters book data for each shelf
 * The shelf (Shelf):
     * lists its associated Book components
